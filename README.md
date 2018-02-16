@@ -29,7 +29,6 @@ the foreign entity.  In this case, you can specify the [OrderBy(Include=typeof(f
 For example, AirportDTO includes a "CountryId" field that we want to alias as "County.Name" when sorting.  When EF queries for this, we
 have to specify an .Include("Country") to get the foreign entity fetched.  We want to sort by the "Name" property within the Country.
 
-The EF Query thus looks like:
 
 AirportDTO.cs : order by a Property in a Foreign Entity
 -------------------------------------------------------
@@ -39,6 +38,7 @@ AirportDTO.cs : order by a Property in a Foreign Entity
 Getting names of properties that can be ordered by
 --------------------------------------------------
 string fieldToSort = OrderByExtensions.GetOrderByFields<Airport>()[0];
+
 
 Using OrderBy - and .Include those Foreign Entities for sorting
 ---------------------------------------------------------------
