@@ -37,6 +37,9 @@ AirportDTO.cs : order by a Property in a Foreign Entity
 	[OrderBy(typeof=(Country), Name="Country.Name")]
 	public int CountryId { get; set; }
 
+	This is called an "OrderByJoin".  The caller specifies "CountryId" as the sort field, but the actual sorting column is
+	Country.Name - a property in a foreign entity.
+
 Getting names of properties that can be ordered by
 --------------------------------------------------
 string fieldToSort = OrderByExtensions.GetOrderByFields<Airport>()[0];
