@@ -1,18 +1,17 @@
 # JQuery-UI-MVC
 ASP.Net MVC Template Wrappers for JQuery UI
 
+This repository holds two interesting ideas.  The first, wrappers for JQuery UI in MVC Fluent parlance can be found
+in the "WebControls.cs" file.  Controls are provided for Checkbox, RadioButton, DropDownList, and Grid - the grid
+wraps the popular free-jqGrid control.
 
-Formatting goes here
+The second is the OrderBy library found in the "OrderByExtensions.cs" file.  It attempts to get rid of the a priori
+knowledge of database sort fields.  Basically, the model properties that can be used to order by are marked with
+an attribute.  The library takes care of the rest, including providing strings for the sort fields.  These strings
+can then be used to mark sortable columns, etc.  No longer do you have to just assume the data layer will take
+"Name" as a sort field.  Now you'll know it because the data model dictates it.
 
-AirExplorer
-==========
-Included is a sample ASP.Net MVC web application for Airport exploring based on NASA WorldWind and Virtual Radar Server / StandingData.
-It uses both the JQuery UI MVC and OrderBy for demonstration.  The free-jqGrid is used for grid-type data and an MVC wrapper is included.
-
-
-WorldWind
-=========
-NASA open source global with different layers, terrain, positioning, etc. etc. See: http://
+The AirExplorer web application demonstrates the use of both ideas and includes an integration with NASA WorldWind.
 
 
 JQuery UI MVC
@@ -50,4 +49,15 @@ string fieldToSort = OrderByExtensions.GetOrderByFields<Airport>()[0];
 Using OrderBy - and .Include those Foreign Entities for sorting
 ---------------------------------------------------------------
 var query = Airports.IncludeOrderByJoins(fieldToSort).Where(a => a.Name == "My Airport").OrderBy(fieldToSort, "ASC");
+
+
+AirExplorer
+==========
+Included is a sample ASP.Net MVC web application for Airport exploring based on NASA WorldWind and Virtual Radar Server / StandingData.
+It uses both the JQuery UI MVC and OrderBy for demonstration.  The free-jqGrid is used for grid-type data and an MVC wrapper is included.
+
+
+WorldWind
+=========
+NASA open source global with different layers, terrain, positioning, etc. etc. See: http://
 
