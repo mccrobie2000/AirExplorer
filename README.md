@@ -63,3 +63,4 @@ Using OrderBy - and .Include those Foreign Entities for sorting
 ---------------------------------------------------------------
 var query = Airports.IncludeOrderByJoins(fieldToSort).Where(a => a.Name == "My Airport").OrderBy(fieldToSort, "ASC");
 
+The OrderBy extension handles invalid and empty sort fields.
