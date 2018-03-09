@@ -26,7 +26,7 @@ It uses both the JQuery UI MVC and OrderBy for demonstration.  The free-jqGrid i
 
 WorldWind
 =========
-NASA open source global with different layers, terrain, positioning, etc. etc. See: http://
+NASA open source global with different layers, terrain, positioning, etc. etc. See: https://worldwind.arc.nasa.gov/
 
 WebControls
 ===========
