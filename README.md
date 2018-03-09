@@ -1,5 +1,12 @@
-# JQuery-UI-MVC
-ASP.Net MVC Template Wrappers for JQuery UI
+# AirExplorer
+A sandbox for ASP.Net MVC / ASP.Net Core
+
+This repository holds a sandbox application called AirExplorer.  This application is for exploring different technologies
+and techniques within the ASP.Net MVC and ASP.Net Core stacks.
+
+A web application called AirExplorer is used for the test bed.  The AirExplorer project allows the user to explorer
+the location of different airports around the world.  The Virtual Radar Server project's StandingData database is used
+as the backing datastore.
 
 This repository holds two interesting ideas.  The first, wrappers for JQuery UI in MVC Fluent parlance can be found
 in the "WebControls.cs" file.  Controls are provided for Checkbox, RadioButton, DropDownList, and Grid - the grid
@@ -11,15 +18,21 @@ an attribute.  The library takes care of the rest, including providing strings f
 can then be used to mark sortable columns, etc.  No longer do you have to just assume the data layer will take
 "Name" as a sort field.  Now you'll know it because the data model dictates it.
 
-The AirExplorer web application demonstrates the use of both ideas and includes an integration with NASA WorldWind.
+AirExplorer
+==========
+Included is a sample ASP.Net MVC web application for Airport exploring based on NASA WorldWind and Virtual Radar Server / StandingData.
+It uses both the JQuery UI MVC and OrderBy for demonstration.  The free-jqGrid is used for grid-type data and an MVC wrapper is included.
 
 
-JQuery UI MVC
-=============
+WorldWind
+=========
+NASA open source global with different layers, terrain, positioning, etc. etc. See: http://
+
+WebControls
+===========
 This GitHub Repository holds ASP.NET MVC Wrappers for some widgets in the JQuery UI widget set.
 
 The wrappers are very similar to the stock Html wrappers and implement a Fluent design like Kendo MVC and FluentHtml.
-
 
 OrderBy
 =======
@@ -50,15 +63,3 @@ Using OrderBy - and .Include those Foreign Entities for sorting
 ---------------------------------------------------------------
 var query = Airports.IncludeOrderByJoins(fieldToSort).Where(a => a.Name == "My Airport").OrderBy(fieldToSort, "ASC");
 
-
-AirExplorer
-==========
-Included is a sample ASP.Net MVC web application for Airport exploring based on NASA WorldWind and Virtual Radar Server / StandingData.
-It uses both the JQuery UI MVC and OrderBy for demonstration.  The free-jqGrid is used for grid-type data and an MVC wrapper is included.
-
-
-WorldWind
-=========
-NASA open source global with different layers, terrain, positioning, etc. etc. See: http://
-
-Updates
