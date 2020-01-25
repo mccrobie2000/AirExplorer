@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>
+This website is a sandbox for various techniques, research, and exploration of user interface design.
+To make the site interesting, it allows the user to explore the location of various airports around the world.
+The data comes from the <a href="http://www.virtualradarserver.co.uk/">Virtual Radar Server Project</a> &quot;StandingData&quot; database.
+The airport and country data are presented via grids / tables and an interactive globe, powered by <a href="https://worldwind.arc.nasa.gov/">NASA WorldWind</a>,
+is displayed for exploring.
+</p>
+<p>
+The website is based on C# and ASP.Net.  It explores the following technologies and techniques:
+<ul>
+<li>Entity Framework</li>
+<li>Autofac Dependency Injection</li>
+<li>ASP.Net MVC</li>
+<li>Asynchronous methods</li>
+<li>Custom HtmlHelpers for JQuery UI</li>
+<li>Custom Event Bus for Javascript</li>
+<li>NASA WorldWind</li>
+<li>Custom OrderBy Attribute</li>
+</ul>
+</p>
+<h2>Client Side</h2>
+<p>
+The client-side is the &quot;standard&quot; HTML markup with Boostrap layout.  The HTML is generated via ASP.Net MVC Razor views.  Various Javascript
+libraries are used to provide an interactive feel to the site, including the positioning on the globe and grid interactions.
+</p>
+<p>
+The interaction between the grids and between the globes are handled via an Event Bus.  When a row in the Airport grid is clicked, it publishes an
+&quot;onAirportDataChanged&quot; event.  Listeners to this event then perform their own specific actions in response.  The globe handling Javascript code
+also uses the Event Bus to listen for positioning and labeling events.
+</p>
+<p>
+Through use of the Event Bus, individual components do not need direct access to each other.  They can be decoupled in that each component does not need
+a specific reference to a function in the other component.  Each module simple registers its listeners to handle events.  Likewise, modules simply fire
+an event to notify listeners of changes in data or views.
+</p>
+<p>
+I would like to explore the impact of Javascript frameworks on the user interface and underlying server-side action methods.  Currently, I've been looking
+at <a href="https://www.sencha.com/products/extjs/#overview">ExtJS</a>, but there are many frameworks coming and going all the time.
+</p>
+<h2>Server Side</h2>
+<p>
+The server-side technologies is what this site is mostly geared towards.  The server-side is designed in the traditional three-tiered architecture:
+<ol>
+<li>Data Layer</li>
+<li>Business Layer</li>
+<li>Presentation Layer</li>
+</ol>
+</p>
+<h3>Data Layer</h3>
+<p>
+The data is contained within a SQLite database provided by the Virtual Radar Server project.  The database, StandingData, holds lots of tables, but for
+this particular sandbox, we&quot;re looking at just <b>Airport</b> and <b>Country</b>.  Fortunately, the two tables can be used independently of any other
+tables in the database.
+</p>
+<p>
+EntityFramework is used for access to the two tables.  I've defined an &quot;edmx&quot; that contains the two table objects.  Template scripts generate the
+entity objects and the database context.  I &quot;enhance&quot; the entity objects with an &quot;OrderBy&quot; attribute.  This is done via the MetadataType
+construct - this avoids changing the automatically generated entity class files yet provides a mechanism for additional attributes on the fields within the
+entity.
+</p>
+<p>
+The asynchronous version of the EntityFramework calls have been used to access the data.  The entire stack from the Data Layer through the Presentation Layer
+is asynchronous.  The only change is the use of &quot;await&quot;, &quot;async&quot;, and EntityFramework asynchronous calls (&quot;CountAsync&quot;, &quot;ToLisAsync&quot;).
+</p>
+<p>
+The Data Layer does <b>not</b> implement a repository pattern.  Typical repository patterns provide a standard set of CRUD operations.  For this sandbox, only
+the Read operation is valid.  Additionally, almost all repository interfaces must be enhanced with various getter methods anyway.  The Data Layer does provide an
+interface that defines the various methods that may be called.  A concrete class implements the interface.
+</p>
+<p>
+The database context is also enhanced with an additional constructor to take a connection string.  The database context is created via Dependency Injection - more
+on that later.
+</p>
+<p>
+Just a note on the return value for getting lists - the return value is not a simple IList - it is an object that contains the IList <b>and</b> total count of
+records.  This total count makes its way to the grids for total page/total record values for the user.  There is some debate as to providing the user with a full
+list of records in a paged grid, especially if the grid is longer than a few pages.  Search parameters are better served to narrow the results.  The total pages/
+total records would have limited, if any, use in such an interface.
+<br>
+<br>
+However, there is a more practical requirement of returning both the IList and total records.  Asynchronous methods can&quot;t have &quot;out&quot; parameters.
+If the total records is required, then the only place to provide it would be in the function return.  (This idea is also found in the business layer.)
+</p>
+<h3>Business Layer</h3>
+<p>
+The Business Layer provides all the business logic for the application.  It relies on the data layer to provide the entities, provides various enhanced services, and
+returns Business Layer objects.  All business layer methods are asynchronous.
+</p>
+<p>
+The business logic for this application is minimal, but one interesting service is the &quot;AirportNearBy&quot; service.  Given a position on the globe in
+latitude/longitude and a radius, the service defines a search square for querying the data layer.  This search uses the bounding box, given as minimum/maximum
+latitude/longitude to efficiently search for airports using the indexes defined in the database.  Because the radius implies a circle, results are further filtered by
+distance from the given point - an airport may lie in the corners of the bounding box, outside of the radius.
+</p>
+<h3>Presentation Layer</h3>
+<p>
+The Presentation Layer generates the HTML and Javascript for the browser.  It relies solely on the business layer for services and objects - that is, it is completely
+agnostic of the data layer.  I have seen projects that expose the EntityFramework entity objects into the controller methods - those projects resulted in business logic
+migrating its way into the controller methods.  I made the decision this is bad and thus the presentation layer cannot and will not access anything in the data layer.
+There is extra work in that business layer objects must be defined, sometimes verbatium (especially for data transfer objects) that closely follow their data layer
+counterparts.
+<br/>
+<br/>
+All controller methods in the presentation layer are asynchonous.  The goal is to provide a mechanism that uses the fewest threads possible to serve the greatest
+number of clients.  I can get into a rant on the full circle of asynchronous to synchronous and back again, but that&quot;s another day.  The generation of HTML for
+partials in response to Ajax is also asynchronous.
+</p>
+<h3>WebControls</h3>
+<p>
+The WebControls is the Fluent JQuery UI wrapper.  In the spirit of Kendo UI, I've made a fluent MVC wrapper around various JQuery UI components,
+including the most awesome jQGrid [another interesting side note for another day].  The wrapper provides &quot;HtmlHelpers&quot; for checkbox, radio button, dropdown,
+and grid controls using the underlying JQuery UI library.  The HtmlHelpers are used in the same manner as the stock ASP.Net MVC HtmlHelpers.  The helpers generate
+Javascript to invoke the JQuery UI to create and control the controls.
+</p>
+<h3>OrderBy</h3>
+<p>
+The grids allow sorting on various columns.  Typically this translates into the usual &quot;switch&quot; and &quot;if-then-else&quot; constructs within the data
+layer for sorting based on string values.
+<br/>
+<br/>
+One method around this is lambda functions being passed into the OrderBy method of EntityFramework.  I was somewhat dismayed that these are translated into a fetch
+of all entities with the order by being performed by EntityFramework and not the database.
+<br/>
+<br/>
+Since functions didn&quot;t work efficently and I wanted to avoid the swith construct with hardcoded names, I decided to mark the entity object&quot;s properties
+with an attribute and provide an extension method called &quot;OrderBy&quot; for IQueryable that would use Expressions for sorting.  The result is the OrderBy
+library.
+</p>
+<p>
+All that is needed is to mark the entity object&quot;s properties with the OrderBy attribute and change EntityFramework to call &quot;.OrderBy(fieldname, direction)&quot;.
+The OrderBy extension can always be included since it won't do anything if the fieldname is not defined or can&quot;t be used to sort.
+</p>
+<p>
+The list of fields that can be sorted is retrieved through another extension template method based on the entity object.  This list can be passed to a grid control or
+otherwise used for a non-hardcoded string list of fields that can be sorted.
+</p>
+<p>
+In the WebControls wrapper, the list is not yet fully integrated.  A column can be marked sortable, but that doesn&quot;t necessarily match with the entity object&quot;s
+properties.  More research must be done to line up the presentation layer, business layer, and data layer with respect to the OrderBy attribute.
+</p>
+<h3>Things To Do</h3>
+<p>
+Explore interaction of Airport grid with Country grid and Country&quot;s Airport grid plus Airport data area.  When clicking on the Airport, the Country grid loads.
+In response to the Country grid, the County&quot;s Airport grid also loads.  It would be nice if the Country&quot;s Airport grid also selected the airport from the
+Airport grid.
+</p>
+<p>
+Connect the Entity object&quot;s OrderBy attribute to the Business Layer DTO and the WebControls grid column.  Allow the grid column to be the final arbitrar of sorting
+on a particular field.
+</p>
+<h3>Unit Tests</h3>
+<p>
+Right now, I&quotm using Microsoft Testing Framework for some unit tests.  Most things do <b>not</b> have a test defined.  I&quot;m finding TDD is good for two things:
+<ul>
+<li>Defines the requirements of the particular layer in that &quot;do only want needs to be done&quot;</li>
+<li>Creates a driver for testing / developing the layer and class instead of writing a quick console application as a driver</li>
+</ul>
+</p>
+<h3>ASP.Net Core</h3>
+<p>
+I have a version of this website up and running with ASP.Net Core.  It is a <b>port</b> and not an upgrade.  The reflection used in the OrderBy library, the creation of
+an alternate modeled HtmlHelper is done differently.  EntityFramework Core is also different in the generation of the entity objects and database context from the
+underlying database.  Microsoft, in its wisdom, decided to hard-code the connection string given in the generation into the database context class - &quot;to be nice to
+beginners&quot;.  The result is one must edit the generated class to remove a potentially secret connection string before adding to a source code repository.  Thanks,
+Microsoft.
+</p>
+

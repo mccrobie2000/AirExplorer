@@ -1,0 +1,72 @@
+﻿@using BusinessServices.Models
+@model AirportDTO
+
+@Html.HiddenFor(m => m.AirportId)
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <strong>@Html.DisplayFor(m => m.Name)</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.CountryName)
+                    @Html.DisplayFor(m => m.CountryName)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Location)
+                    @Html.DisplayFor(m => m.Location)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Icao)
+                    @Html.DisplayFor(m => m.Icao)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Iata)
+                    @Html.DisplayFor(m => m.Iata)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Latitude)
+                    @Html.DisplayFor(m => m.Latitude)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Longitude)
+                    @Html.DisplayFor(m => m.Longitude)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-control-static">
+                    @Html.LabelFor(m => m.Altitude)
+                    @Html.DisplayFor(m => m.Altitude)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

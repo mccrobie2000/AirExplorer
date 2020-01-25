@@ -1,0 +1,91 @@
+﻿@using WebControls
+@using BusinessServices.Models
+@model IEnumerable<CountryDTO>
+
+<script>
+    window.EventBus.on("airportDataChanged", function (data) {
+        var rowId = $('#CountryTable').jqGrid('getGridParam', 'selrow');
+        var rowData = $('#CountryTable').getRowData(rowId);
+        if (rowData.CountryId != data.Airport.CountryId) {
+            $('#CountryTable').jqGrid('setGridParam', { 'postData': { 'countryId': data.Airport.CountryId } }).trigger('reloadGrid');
+        }
+    });
+
+    var onGridLoaded = function (data) {
+        if (data.userdata != null) {
+            $('#CountryTable').jqGrid('setSelection', data.userdata);
+            $('#CountryTable').jqGrid('setGridParam', { 'postData': { 'countryId': null } });
+        }
+    }
+
+    var runCountrySelected = function (rowId) {
+        var rowData = $('#CountryTable').getRowData(rowId);
+
+        var data = {
+            countryId: rowData.CountryId
+        };
+
+        $.post(
+            '@Url.Action("Country", "Explorer")',
+            data,
+            function (data) {
+                window.EventBus.publish("countryDataChanged", data);
+
+                window.EventBus.publish("clearWindow");
+
+                for (var i = 0; i < data.Airports.length; i++) {
+                    var position = {
+                        latitude: data.Airports[i].Latitude,
+                        longitude: data.Airports[i].Longitude,
+                        callLetters: data.Airports[i].Name + '\n(' + data.Airports[i].Icao + ')',
+                        altitude: data.Airports[i].Altitude
+                    };
+
+                    window.EventBus.publish("labelIt", position);
+
+                    if (i == 0) {
+                        position.altitude = 120000;
+                        window.EventBus.publish("positionChanged", position);
+                    }
+                }
+            }
+        );
+
+        return false;
+    }
+
+    var onCountrySelected = function (rowId) {
+        loadedFromEvent = false;
+
+        runCountrySelected(rowId);
+
+        return false;
+    }
+
+</script>
+
+@(Html.For<CountryDTO>().WebControls().Grid(Model)
+                .Name("CountryTable")
+                .Caption("Countries")
+                .Width(400)
+                .Columns(columns =>
+                {
+                    columns.Bound(m => m.CountryId).Hidden().Key();
+                    columns.Bound(m => m.Name).Sortable();
+                })
+                .InitialSort(m => m.Name)
+                .DataSource(source =>
+                {
+                    source.Ajax().Read(reader =>
+                    {
+                        reader.Action("Countries", "Explorer");
+                    });
+                })
+                .Events(events =>
+                {
+                    events.SelectRow("onCountrySelected");
+                    events.LoadComplete("onGridLoaded");
+                    events.UserDataHandler(null);
+                })
+)
+

@@ -1,0 +1,17 @@
+﻿@using BusinessServices.Models
+@using Web.Areas.Explorer.Models
+@model CountryModel
+
+@Html.HiddenFor(m => m.Country.CountryId)
+
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <strong>@Html.DisplayFor(m => m.Country.Name)</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @Html.Partial("_CountryAirportsGrid", Model, new ViewDataDictionary(ViewData) { { "myAirportGridName", "CountriesAirports" } })
+    </div>
+</div>
+

@@ -18,6 +18,20 @@ an attribute.  The library takes care of the rest, including providing strings f
 can then be used to mark sortable columns, etc.  No longer do you have to just assume the data layer will take
 "Name" as a sort field.  Now you'll know it because the data model dictates it.
 
+Building
+========
+```
+dotnet build
+```
+
+Running
+=======
+Use ```
+dotnet run --project Web/Web.csproj
+```
+
+The dotnet core webserver will start, then use a browser to navigate to the listed URL.
+
 AirExplorer
 ==========
 Included is a sample ASP.Net MVC web application for Airport exploring based on NASA WorldWind and Virtual Radar Server / StandingData.

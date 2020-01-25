@@ -1,0 +1,1465 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StandingData.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=z:\Air\data\StandingData.sqb" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AircraftType">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Icao" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="WakeTurbulenceId" Type="integer" Nullable="false" />
+          <Property Name="SpeciesId" Type="integer" Nullable="false" />
+          <Property Name="EngineTypeId" Type="integer" Nullable="false" />
+          <Property Name="EnginePlacementId" Type="integer" Nullable="false" />
+          <Property Name="Engines" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="AircraftTypeModel">
+          <Key>
+            <PropertyRef Name="AircraftTypeModelId" />
+          </Key>
+          <Property Name="AircraftTypeModelId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AircraftTypeId" Type="integer" Nullable="false" />
+          <Property Name="ModelId" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Icao" Type="char" MaxLength="4" />
+          <Property Name="Iata" Type="char" MaxLength="3" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="CountryId" Type="integer" Nullable="false" />
+          <Property Name="Latitude" Type="real" />
+          <Property Name="Longitude" Type="real" />
+          <Property Name="Altitude" Type="integer" />
+        </EntityType>
+        <EntityType Name="CodeBlock">
+          <Key>
+            <PropertyRef Name="CodeBlockId" />
+          </Key>
+          <Property Name="CodeBlockId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="integer" />
+          <Property Name="BitMask" Type="int" Nullable="false" />
+          <Property Name="SignificantBitMask" Type="int" Nullable="false" />
+          <Property Name="IsMilitary" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.DatabaseVersion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DatabaseVersion">
+          <Key>
+            <PropertyRef Name="Version" />
+            <PropertyRef Name="Created" />
+          </Key>
+          <Property Name="Version" Type="integer" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EnginePlacement">
+          <Key>
+            <PropertyRef Name="EnginePlacementId" />
+          </Key>
+          <Property Name="EnginePlacementId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EngineType">
+          <Key>
+            <PropertyRef Name="EngineTypeId" />
+          </Key>
+          <Property Name="EngineTypeId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ManufacturerId" Type="integer" />
+        </EntityType>
+        <EntityType Name="Operator">
+          <Key>
+            <PropertyRef Name="OperatorId" />
+          </Key>
+          <Property Name="OperatorId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Icao" Type="char" MaxLength="3" />
+          <Property Name="Iata" Type="char" MaxLength="2" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="PositioningFlightPattern" Type="varchar" MaxLength="50" />
+          <Property Name="CharterFlightPattern" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Callsign" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="OperatorId" Type="integer" Nullable="false" />
+          <Property Name="FlightNumber" Type="nvarchar" MaxLength="8" />
+          <Property Name="FromAirportId" Type="integer" Nullable="false" />
+          <Property Name="ToAirportId" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RouteStop">
+          <Key>
+            <PropertyRef Name="RouteStopId" />
+          </Key>
+          <Property Name="RouteStopId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SequenceNo" Type="tinyint" Nullable="false" />
+          <Property Name="RouteId" Type="integer" Nullable="false" />
+          <Property Name="AirportId" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Species">
+          <Key>
+            <PropertyRef Name="SpeciesId" />
+          </Key>
+          <Property Name="SpeciesId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WakeTurbulence">
+          <Key>
+            <PropertyRef Name="WakeTurbulenceId" />
+          </Key>
+          <Property Name="WakeTurbulenceId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.AircraftTypeNoEnumsView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AircraftTypeNoEnumsView">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+            <PropertyRef Name="Icao" />
+            <PropertyRef Name="WakeTurbulenceId" />
+            <PropertyRef Name="SpeciesId" />
+            <PropertyRef Name="EngineTypeId" />
+            <PropertyRef Name="EnginePlacementId" />
+            <PropertyRef Name="ModelId" />
+            <PropertyRef Name="Model" />
+            <PropertyRef Name="Manufacturer" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="integer" Nullable="false" />
+          <Property Name="Icao" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="WakeTurbulenceId" Type="integer" Nullable="false" />
+          <Property Name="SpeciesId" Type="integer" Nullable="false" />
+          <Property Name="EngineTypeId" Type="integer" Nullable="false" />
+          <Property Name="EnginePlacementId" Type="integer" Nullable="false" />
+          <Property Name="Engines" Type="nvarchar" MaxLength="10" />
+          <Property Name="ModelId" Type="integer" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ManufacturerId" Type="integer" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.AircraftTypeView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AircraftTypeView">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+            <PropertyRef Name="Icao" />
+            <PropertyRef Name="WakeTurbulenceId" />
+            <PropertyRef Name="WakeTurbulence" />
+            <PropertyRef Name="SpeciesId" />
+            <PropertyRef Name="Species" />
+            <PropertyRef Name="EngineTypeId" />
+            <PropertyRef Name="EngineType" />
+            <PropertyRef Name="EnginePlacementId" />
+            <PropertyRef Name="EnginePlacement" />
+            <PropertyRef Name="ModelId" />
+            <PropertyRef Name="Model" />
+            <PropertyRef Name="Manufacturer" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="integer" Nullable="false" />
+          <Property Name="Icao" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="WakeTurbulenceId" Type="integer" Nullable="false" />
+          <Property Name="WakeTurbulence" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SpeciesId" Type="integer" Nullable="false" />
+          <Property Name="Species" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EngineTypeId" Type="integer" Nullable="false" />
+          <Property Name="EngineType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EnginePlacementId" Type="integer" Nullable="false" />
+          <Property Name="EnginePlacement" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="Engines" Type="nvarchar" MaxLength="10" />
+          <Property Name="ModelId" Type="integer" Nullable="false" />
+          <Property Name="Model" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ManufacturerId" Type="integer" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.CodeBlockView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CodeBlockView">
+          <Key>
+            <PropertyRef Name="CodeBlockId" />
+            <PropertyRef Name="Country" />
+            <PropertyRef Name="BitMask" />
+            <PropertyRef Name="SignificantBitMask" />
+            <PropertyRef Name="IsMilitary" />
+          </Key>
+          <Property Name="CodeBlockId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="integer" />
+          <Property Name="Country" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="BitMask" Type="int" Nullable="false" />
+          <Property Name="SignificantBitMask" Type="int" Nullable="false" />
+          <Property Name="IsMilitary" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.RouteStopView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RouteStopView">
+          <Key>
+            <PropertyRef Name="RouteStopId" />
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="AirportId" />
+            <PropertyRef Name="SequenceNo" />
+            <PropertyRef Name="AirportName" />
+            <PropertyRef Name="AirportLocation" />
+            <PropertyRef Name="AirportCountryId" />
+            <PropertyRef Name="AirportCountry" />
+          </Key>
+          <Property Name="RouteStopId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteId" Type="integer" Nullable="false" />
+          <Property Name="AirportId" Type="integer" Nullable="false" />
+          <Property Name="SequenceNo" Type="tinyint" Nullable="false" />
+          <Property Name="AirportIcao" Type="char" MaxLength="4" />
+          <Property Name="AirportIata" Type="char" MaxLength="3" />
+          <Property Name="AirportName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="AirportLatitude" Type="real" />
+          <Property Name="AirportLongitude" Type="real" />
+          <Property Name="AirportAltitude" Type="integer" />
+          <Property Name="AirportLocation" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="AirportCountryId" Type="integer" Nullable="false" />
+          <Property Name="AirportCountry" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'main.RouteView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RouteView">
+          <Key>
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="Callsign" />
+            <PropertyRef Name="OperatorId" />
+            <PropertyRef Name="OperatorName" />
+            <PropertyRef Name="FromAirportId" />
+            <PropertyRef Name="FromAirportName" />
+            <PropertyRef Name="FromAirportLocation" />
+            <PropertyRef Name="FromAirportCountryId" />
+            <PropertyRef Name="FromAirportCountry" />
+            <PropertyRef Name="ToAirportId" />
+            <PropertyRef Name="ToAirportName" />
+            <PropertyRef Name="ToAirportLocation" />
+            <PropertyRef Name="ToAirportCountryId" />
+            <PropertyRef Name="ToAirportCountry" />
+          </Key>
+          <Property Name="RouteId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Callsign" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="OperatorId" Type="integer" Nullable="false" />
+          <Property Name="OperatorIcao" Type="char" MaxLength="3" />
+          <Property Name="OperatorIata" Type="char" MaxLength="2" />
+          <Property Name="OperatorName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="FlightNumber" Type="nvarchar" MaxLength="8" />
+          <Property Name="FromAirportId" Type="integer" Nullable="false" />
+          <Property Name="FromAirportIcao" Type="char" MaxLength="4" />
+          <Property Name="FromAirportIata" Type="char" MaxLength="3" />
+          <Property Name="FromAirportName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="FromAirportLatitude" Type="real" />
+          <Property Name="FromAirportLongitude" Type="real" />
+          <Property Name="FromAirportAltitude" Type="integer" />
+          <Property Name="FromAirportLocation" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="FromAirportCountryId" Type="integer" Nullable="false" />
+          <Property Name="FromAirportCountry" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ToAirportId" Type="integer" Nullable="false" />
+          <Property Name="ToAirportIcao" Type="char" MaxLength="4" />
+          <Property Name="ToAirportIata" Type="char" MaxLength="3" />
+          <Property Name="ToAirportName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ToAirportLatitude" Type="real" />
+          <Property Name="ToAirportLongitude" Type="real" />
+          <Property Name="ToAirportAltitude" Type="integer" />
+          <Property Name="ToAirportLocation" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="ToAirportCountryId" Type="integer" Nullable="false" />
+          <Property Name="ToAirportCountry" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AircraftType_0_0">
+          <End Role="EnginePlacement" Type="Self.EnginePlacement" Multiplicity="1" />
+          <End Role="AircraftType" Type="Self.AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnginePlacement">
+              <PropertyRef Name="EnginePlacementId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="EnginePlacementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_1_0">
+          <End Role="EngineType" Type="Self.EngineType" Multiplicity="1" />
+          <End Role="AircraftType" Type="Self.AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EngineType">
+              <PropertyRef Name="EngineTypeId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="EngineTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_2_0">
+          <End Role="Species" Type="Self.Species" Multiplicity="1" />
+          <End Role="AircraftType" Type="Self.AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Species">
+              <PropertyRef Name="SpeciesId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="SpeciesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_3_0">
+          <End Role="WakeTurbulence" Type="Self.WakeTurbulence" Multiplicity="1" />
+          <End Role="AircraftType" Type="Self.AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WakeTurbulence">
+              <PropertyRef Name="WakeTurbulenceId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="WakeTurbulenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftTypeModel_0_0">
+          <End Role="Model" Type="Self.Model" Multiplicity="1" />
+          <End Role="AircraftTypeModel" Type="Self.AircraftTypeModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="AircraftTypeModel">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftTypeModel_1_0">
+          <End Role="AircraftType" Type="Self.AircraftType" Multiplicity="1" />
+          <End Role="AircraftTypeModel" Type="Self.AircraftTypeModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AircraftType">
+              <PropertyRef Name="AircraftTypeId" />
+            </Principal>
+            <Dependent Role="AircraftTypeModel">
+              <PropertyRef Name="AircraftTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Airport_0_0">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="Airport" Type="Self.Airport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Airport">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CodeBlock_0_0">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="CodeBlock" Type="Self.CodeBlock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="CodeBlock">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Model_0_0">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="0..1" />
+          <End Role="Model" Type="Self.Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_0_0">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="ToAirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_1_0">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="FromAirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_2_0">
+          <End Role="Operator" Type="Self.Operator" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operator">
+              <PropertyRef Name="OperatorId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="OperatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteStop_0_0">
+          <End Role="Airport" Type="Self.Airport" Multiplicity="1" />
+          <End Role="RouteStop" Type="Self.RouteStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="RouteStop">
+              <PropertyRef Name="AirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteStop_1_0">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="RouteStop" Type="Self.RouteStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="RouteStop">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StandingDataStoreContainer">
+          <EntitySet Name="AircraftType" EntityType="Self.AircraftType" store:Type="Tables" />
+          <EntitySet Name="AircraftTypeModel" EntityType="Self.AircraftTypeModel" store:Type="Tables" />
+          <EntitySet Name="Airport" EntityType="Self.Airport" store:Type="Tables" />
+          <EntitySet Name="CodeBlock" EntityType="Self.CodeBlock" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" store:Type="Tables" />
+          <EntitySet Name="EnginePlacement" EntityType="Self.EnginePlacement" store:Type="Tables" />
+          <EntitySet Name="EngineType" EntityType="Self.EngineType" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" store:Type="Tables" />
+          <EntitySet Name="Model" EntityType="Self.Model" store:Type="Tables" />
+          <EntitySet Name="Operator" EntityType="Self.Operator" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" store:Type="Tables" />
+          <EntitySet Name="RouteStop" EntityType="Self.RouteStop" store:Type="Tables" />
+          <EntitySet Name="Species" EntityType="Self.Species" store:Type="Tables" />
+          <EntitySet Name="WakeTurbulence" EntityType="Self.WakeTurbulence" store:Type="Tables" />
+          <EntitySet Name="DatabaseVersion" EntityType="Self.DatabaseVersion" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[DatabaseVersion].[Version] AS [Version], 
+[DatabaseVersion].[Created] AS [Created]
+FROM [DatabaseVersion] AS [DatabaseVersion]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AircraftTypeNoEnumsView" EntityType="Self.AircraftTypeNoEnumsView" store:Type="Views">
+            <DefiningQuery>SELECT 
+[AircraftTypeNoEnumsView].[AircraftTypeId] AS [AircraftTypeId], 
+[AircraftTypeNoEnumsView].[Icao] AS [Icao], 
+[AircraftTypeNoEnumsView].[WakeTurbulenceId] AS [WakeTurbulenceId], 
+[AircraftTypeNoEnumsView].[SpeciesId] AS [SpeciesId], 
+[AircraftTypeNoEnumsView].[EngineTypeId] AS [EngineTypeId], 
+[AircraftTypeNoEnumsView].[EnginePlacementId] AS [EnginePlacementId], 
+[AircraftTypeNoEnumsView].[Engines] AS [Engines], 
+[AircraftTypeNoEnumsView].[ModelId] AS [ModelId], 
+[AircraftTypeNoEnumsView].[Model] AS [Model], 
+[AircraftTypeNoEnumsView].[ManufacturerId] AS [ManufacturerId], 
+[AircraftTypeNoEnumsView].[Manufacturer] AS [Manufacturer]
+FROM [AircraftTypeNoEnumsView] AS [AircraftTypeNoEnumsView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="AircraftTypeView" EntityType="Self.AircraftTypeView" store:Type="Views">
+            <DefiningQuery>SELECT 
+[AircraftTypeView].[AircraftTypeId] AS [AircraftTypeId], 
+[AircraftTypeView].[Icao] AS [Icao], 
+[AircraftTypeView].[WakeTurbulenceId] AS [WakeTurbulenceId], 
+[AircraftTypeView].[WakeTurbulence] AS [WakeTurbulence], 
+[AircraftTypeView].[SpeciesId] AS [SpeciesId], 
+[AircraftTypeView].[Species] AS [Species], 
+[AircraftTypeView].[EngineTypeId] AS [EngineTypeId], 
+[AircraftTypeView].[EngineType] AS [EngineType], 
+[AircraftTypeView].[EnginePlacementId] AS [EnginePlacementId], 
+[AircraftTypeView].[EnginePlacement] AS [EnginePlacement], 
+[AircraftTypeView].[Engines] AS [Engines], 
+[AircraftTypeView].[ModelId] AS [ModelId], 
+[AircraftTypeView].[Model] AS [Model], 
+[AircraftTypeView].[ManufacturerId] AS [ManufacturerId], 
+[AircraftTypeView].[Manufacturer] AS [Manufacturer]
+FROM [AircraftTypeView] AS [AircraftTypeView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="CodeBlockView" EntityType="Self.CodeBlockView" store:Type="Views">
+            <DefiningQuery>SELECT 
+[CodeBlockView].[CodeBlockId] AS [CodeBlockId], 
+[CodeBlockView].[CountryId] AS [CountryId], 
+[CodeBlockView].[Country] AS [Country], 
+[CodeBlockView].[BitMask] AS [BitMask], 
+[CodeBlockView].[SignificantBitMask] AS [SignificantBitMask], 
+[CodeBlockView].[IsMilitary] AS [IsMilitary]
+FROM [CodeBlockView] AS [CodeBlockView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RouteStopView" EntityType="Self.RouteStopView" store:Type="Views">
+            <DefiningQuery>SELECT 
+[RouteStopView].[RouteStopId] AS [RouteStopId], 
+[RouteStopView].[RouteId] AS [RouteId], 
+[RouteStopView].[AirportId] AS [AirportId], 
+[RouteStopView].[SequenceNo] AS [SequenceNo], 
+[RouteStopView].[AirportIcao] AS [AirportIcao], 
+[RouteStopView].[AirportIata] AS [AirportIata], 
+[RouteStopView].[AirportName] AS [AirportName], 
+[RouteStopView].[AirportLatitude] AS [AirportLatitude], 
+[RouteStopView].[AirportLongitude] AS [AirportLongitude], 
+[RouteStopView].[AirportAltitude] AS [AirportAltitude], 
+[RouteStopView].[AirportLocation] AS [AirportLocation], 
+[RouteStopView].[AirportCountryId] AS [AirportCountryId], 
+[RouteStopView].[AirportCountry] AS [AirportCountry]
+FROM [RouteStopView] AS [RouteStopView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="RouteView" EntityType="Self.RouteView" store:Type="Views">
+            <DefiningQuery>SELECT 
+[RouteView].[RouteId] AS [RouteId], 
+[RouteView].[Callsign] AS [Callsign], 
+[RouteView].[OperatorId] AS [OperatorId], 
+[RouteView].[OperatorIcao] AS [OperatorIcao], 
+[RouteView].[OperatorIata] AS [OperatorIata], 
+[RouteView].[OperatorName] AS [OperatorName], 
+[RouteView].[FlightNumber] AS [FlightNumber], 
+[RouteView].[FromAirportId] AS [FromAirportId], 
+[RouteView].[FromAirportIcao] AS [FromAirportIcao], 
+[RouteView].[FromAirportIata] AS [FromAirportIata], 
+[RouteView].[FromAirportName] AS [FromAirportName], 
+[RouteView].[FromAirportLatitude] AS [FromAirportLatitude], 
+[RouteView].[FromAirportLongitude] AS [FromAirportLongitude], 
+[RouteView].[FromAirportAltitude] AS [FromAirportAltitude], 
+[RouteView].[FromAirportLocation] AS [FromAirportLocation], 
+[RouteView].[FromAirportCountryId] AS [FromAirportCountryId], 
+[RouteView].[FromAirportCountry] AS [FromAirportCountry], 
+[RouteView].[ToAirportId] AS [ToAirportId], 
+[RouteView].[ToAirportIcao] AS [ToAirportIcao], 
+[RouteView].[ToAirportIata] AS [ToAirportIata], 
+[RouteView].[ToAirportName] AS [ToAirportName], 
+[RouteView].[ToAirportLatitude] AS [ToAirportLatitude], 
+[RouteView].[ToAirportLongitude] AS [ToAirportLongitude], 
+[RouteView].[ToAirportAltitude] AS [ToAirportAltitude], 
+[RouteView].[ToAirportLocation] AS [ToAirportLocation], 
+[RouteView].[ToAirportCountryId] AS [ToAirportCountryId], 
+[RouteView].[ToAirportCountry] AS [ToAirportCountry]
+FROM [RouteView] AS [RouteView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AircraftType_0_0" Association="Self.FK_AircraftType_0_0">
+            <End Role="EnginePlacement" EntitySet="EnginePlacement" />
+            <End Role="AircraftType" EntitySet="AircraftType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_1_0" Association="Self.FK_AircraftType_1_0">
+            <End Role="EngineType" EntitySet="EngineType" />
+            <End Role="AircraftType" EntitySet="AircraftType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_2_0" Association="Self.FK_AircraftType_2_0">
+            <End Role="Species" EntitySet="Species" />
+            <End Role="AircraftType" EntitySet="AircraftType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_3_0" Association="Self.FK_AircraftType_3_0">
+            <End Role="WakeTurbulence" EntitySet="WakeTurbulence" />
+            <End Role="AircraftType" EntitySet="AircraftType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftTypeModel_0_0" Association="Self.FK_AircraftTypeModel_0_0">
+            <End Role="Model" EntitySet="Model" />
+            <End Role="AircraftTypeModel" EntitySet="AircraftTypeModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftTypeModel_1_0" Association="Self.FK_AircraftTypeModel_1_0">
+            <End Role="AircraftType" EntitySet="AircraftType" />
+            <End Role="AircraftTypeModel" EntitySet="AircraftTypeModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Airport_0_0" Association="Self.FK_Airport_0_0">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Airport" EntitySet="Airport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CodeBlock_0_0" Association="Self.FK_CodeBlock_0_0">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="CodeBlock" EntitySet="CodeBlock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Model_0_0" Association="Self.FK_Model_0_0">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Model" EntitySet="Model" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_0_0" Association="Self.FK_Route_0_0">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_1_0" Association="Self.FK_Route_1_0">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_2_0" Association="Self.FK_Route_2_0">
+            <End Role="Operator" EntitySet="Operator" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteStop_0_0" Association="Self.FK_RouteStop_0_0">
+            <End Role="Airport" EntitySet="Airport" />
+            <End Role="RouteStop" EntitySet="RouteStop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteStop_1_0" Association="Self.FK_RouteStop_1_0">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="RouteStop" EntitySet="RouteStop" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="StandingData" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="StandingDataContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AircraftTypes" EntityType="StandingData.AircraftType" />
+          <EntitySet Name="AircraftTypeModels" EntityType="StandingData.AircraftTypeModel" />
+          <EntitySet Name="Airports" EntityType="StandingData.Airport" />
+          <EntitySet Name="CodeBlocks" EntityType="StandingData.CodeBlock" />
+          <EntitySet Name="Countries" EntityType="StandingData.Country" />
+          <EntitySet Name="EnginePlacements" EntityType="StandingData.EnginePlacement" />
+          <EntitySet Name="EngineTypes" EntityType="StandingData.EngineType" />
+          <EntitySet Name="Manufacturers" EntityType="StandingData.Manufacturer" />
+          <EntitySet Name="Models" EntityType="StandingData.Model" />
+          <EntitySet Name="Operators" EntityType="StandingData.Operator" />
+          <EntitySet Name="Routes" EntityType="StandingData.Route" />
+          <EntitySet Name="RouteStops" EntityType="StandingData.RouteStop" />
+          <EntitySet Name="Species" EntityType="StandingData.Species" />
+          <EntitySet Name="WakeTurbulences" EntityType="StandingData.WakeTurbulence" />
+          <EntitySet Name="DatabaseVersions" EntityType="StandingData.DatabaseVersion" />
+          <EntitySet Name="AircraftTypeNoEnumsViews" EntityType="StandingData.AircraftTypeNoEnumsView" />
+          <EntitySet Name="AircraftTypeViews" EntityType="StandingData.AircraftTypeView" />
+          <EntitySet Name="CodeBlockViews" EntityType="StandingData.CodeBlockView" />
+          <EntitySet Name="RouteStopViews" EntityType="StandingData.RouteStopView" />
+          <EntitySet Name="RouteViews" EntityType="StandingData.RouteView" />
+          <AssociationSet Name="FK_AircraftType_0_0" Association="StandingData.FK_AircraftType_0_0">
+            <End Role="EnginePlacement" EntitySet="EnginePlacements" />
+            <End Role="AircraftType" EntitySet="AircraftTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_1_0" Association="StandingData.FK_AircraftType_1_0">
+            <End Role="EngineType" EntitySet="EngineTypes" />
+            <End Role="AircraftType" EntitySet="AircraftTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_2_0" Association="StandingData.FK_AircraftType_2_0">
+            <End Role="Species" EntitySet="Species" />
+            <End Role="AircraftType" EntitySet="AircraftTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftType_3_0" Association="StandingData.FK_AircraftType_3_0">
+            <End Role="WakeTurbulence" EntitySet="WakeTurbulences" />
+            <End Role="AircraftType" EntitySet="AircraftTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftTypeModel_1_0" Association="StandingData.FK_AircraftTypeModel_1_0">
+            <End Role="AircraftType" EntitySet="AircraftTypes" />
+            <End Role="AircraftTypeModel" EntitySet="AircraftTypeModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AircraftTypeModel_0_0" Association="StandingData.FK_AircraftTypeModel_0_0">
+            <End Role="Model" EntitySet="Models" />
+            <End Role="AircraftTypeModel" EntitySet="AircraftTypeModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Airport_0_0" Association="StandingData.FK_Airport_0_0">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Airport" EntitySet="Airports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_0_0" Association="StandingData.FK_Route_0_0">
+            <End Role="Airport" EntitySet="Airports" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_1_0" Association="StandingData.FK_Route_1_0">
+            <End Role="Airport" EntitySet="Airports" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteStop_0_0" Association="StandingData.FK_RouteStop_0_0">
+            <End Role="Airport" EntitySet="Airports" />
+            <End Role="RouteStop" EntitySet="RouteStops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CodeBlock_0_0" Association="StandingData.FK_CodeBlock_0_0">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="CodeBlock" EntitySet="CodeBlocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Model_0_0" Association="StandingData.FK_Model_0_0">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Model" EntitySet="Models" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_2_0" Association="StandingData.FK_Route_2_0">
+            <End Role="Operator" EntitySet="Operators" />
+            <End Role="Route" EntitySet="Routes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RouteStop_1_0" Association="StandingData.FK_RouteStop_1_0">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="RouteStop" EntitySet="RouteStops" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AircraftType">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Icao" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulenceId" Type="Int64" Nullable="false" />
+          <Property Name="SpeciesId" Type="Int64" Nullable="false" />
+          <Property Name="EngineTypeId" Type="Int64" Nullable="false" />
+          <Property Name="EnginePlacementId" Type="Int64" Nullable="false" />
+          <Property Name="Engines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EnginePlacement" Relationship="StandingData.FK_AircraftType_0_0" FromRole="AircraftType" ToRole="EnginePlacement" />
+          <NavigationProperty Name="EngineType" Relationship="StandingData.FK_AircraftType_1_0" FromRole="AircraftType" ToRole="EngineType" />
+          <NavigationProperty Name="Species" Relationship="StandingData.FK_AircraftType_2_0" FromRole="AircraftType" ToRole="Species" />
+          <NavigationProperty Name="WakeTurbulence" Relationship="StandingData.FK_AircraftType_3_0" FromRole="AircraftType" ToRole="WakeTurbulence" />
+          <NavigationProperty Name="AircraftTypeModels" Relationship="StandingData.FK_AircraftTypeModel_1_0" FromRole="AircraftType" ToRole="AircraftTypeModel" />
+        </EntityType>
+        <EntityType Name="AircraftTypeModel">
+          <Key>
+            <PropertyRef Name="AircraftTypeModelId" />
+          </Key>
+          <Property Name="AircraftTypeModelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AircraftTypeId" Type="Int64" Nullable="false" />
+          <Property Name="ModelId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="AircraftType" Relationship="StandingData.FK_AircraftTypeModel_1_0" FromRole="AircraftTypeModel" ToRole="AircraftType" />
+          <NavigationProperty Name="Model" Relationship="StandingData.FK_AircraftTypeModel_0_0" FromRole="AircraftTypeModel" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="Airport">
+          <Key>
+            <PropertyRef Name="AirportId" />
+          </Key>
+          <Property Name="AirportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Icao" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Iata" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int64" Nullable="false" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Altitude" Type="Int64" />
+          <NavigationProperty Name="Country" Relationship="StandingData.FK_Airport_0_0" FromRole="Airport" ToRole="Country" />
+          <NavigationProperty Name="Routes" Relationship="StandingData.FK_Route_0_0" FromRole="Airport" ToRole="Route" />
+          <NavigationProperty Name="Routes1" Relationship="StandingData.FK_Route_1_0" FromRole="Airport" ToRole="Route" />
+          <NavigationProperty Name="RouteStops" Relationship="StandingData.FK_RouteStop_0_0" FromRole="Airport" ToRole="RouteStop" />
+        </EntityType>
+        <EntityType Name="CodeBlock">
+          <Key>
+            <PropertyRef Name="CodeBlockId" />
+          </Key>
+          <Property Name="CodeBlockId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int64" />
+          <Property Name="BitMask" Type="Int32" Nullable="false" />
+          <Property Name="SignificantBitMask" Type="Int32" Nullable="false" />
+          <Property Name="IsMilitary" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="StandingData.FK_CodeBlock_0_0" FromRole="CodeBlock" ToRole="Country" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Airports" Relationship="StandingData.FK_Airport_0_0" FromRole="Country" ToRole="Airport" />
+          <NavigationProperty Name="CodeBlocks" Relationship="StandingData.FK_CodeBlock_0_0" FromRole="Country" ToRole="CodeBlock" />
+        </EntityType>
+        <EntityType Name="EnginePlacement">
+          <Key>
+            <PropertyRef Name="EnginePlacementId" />
+          </Key>
+          <Property Name="EnginePlacementId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AircraftTypes" Relationship="StandingData.FK_AircraftType_0_0" FromRole="EnginePlacement" ToRole="AircraftType" />
+        </EntityType>
+        <EntityType Name="EngineType">
+          <Key>
+            <PropertyRef Name="EngineTypeId" />
+          </Key>
+          <Property Name="EngineTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AircraftTypes" Relationship="StandingData.FK_AircraftType_1_0" FromRole="EngineType" ToRole="AircraftType" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Models" Relationship="StandingData.FK_Model_0_0" FromRole="Manufacturer" ToRole="Model" />
+        </EntityType>
+        <EntityType Name="Model">
+          <Key>
+            <PropertyRef Name="ModelId" />
+          </Key>
+          <Property Name="ModelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturerId" Type="Int64" />
+          <NavigationProperty Name="AircraftTypeModels" Relationship="StandingData.FK_AircraftTypeModel_0_0" FromRole="Model" ToRole="AircraftTypeModel" />
+          <NavigationProperty Name="Manufacturer" Relationship="StandingData.FK_Model_0_0" FromRole="Model" ToRole="Manufacturer" />
+        </EntityType>
+        <EntityType Name="Operator">
+          <Key>
+            <PropertyRef Name="OperatorId" />
+          </Key>
+          <Property Name="OperatorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Icao" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Iata" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="PositioningFlightPattern" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CharterFlightPattern" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Routes" Relationship="StandingData.FK_Route_2_0" FromRole="Operator" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="RouteId" />
+          </Key>
+          <Property Name="RouteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Callsign" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="OperatorId" Type="Int64" Nullable="false" />
+          <Property Name="FlightNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FromAirportId" Type="Int64" Nullable="false" />
+          <Property Name="ToAirportId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Airport" Relationship="StandingData.FK_Route_0_0" FromRole="Route" ToRole="Airport" />
+          <NavigationProperty Name="Airport1" Relationship="StandingData.FK_Route_1_0" FromRole="Route" ToRole="Airport" />
+          <NavigationProperty Name="Operator" Relationship="StandingData.FK_Route_2_0" FromRole="Route" ToRole="Operator" />
+          <NavigationProperty Name="RouteStops" Relationship="StandingData.FK_RouteStop_1_0" FromRole="Route" ToRole="RouteStop" />
+        </EntityType>
+        <EntityType Name="RouteStop">
+          <Key>
+            <PropertyRef Name="RouteStopId" />
+          </Key>
+          <Property Name="RouteStopId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SequenceNo" Type="Byte" Nullable="false" />
+          <Property Name="RouteId" Type="Int64" Nullable="false" />
+          <Property Name="AirportId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Airport" Relationship="StandingData.FK_RouteStop_0_0" FromRole="RouteStop" ToRole="Airport" />
+          <NavigationProperty Name="Route" Relationship="StandingData.FK_RouteStop_1_0" FromRole="RouteStop" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="Species">
+          <Key>
+            <PropertyRef Name="SpeciesId" />
+          </Key>
+          <Property Name="SpeciesId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AircraftTypes" Relationship="StandingData.FK_AircraftType_2_0" FromRole="Species" ToRole="AircraftType" />
+        </EntityType>
+        <EntityType Name="WakeTurbulence">
+          <Key>
+            <PropertyRef Name="WakeTurbulenceId" />
+          </Key>
+          <Property Name="WakeTurbulenceId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AircraftTypes" Relationship="StandingData.FK_AircraftType_3_0" FromRole="WakeTurbulence" ToRole="AircraftType" />
+        </EntityType>
+        <EntityType Name="DatabaseVersion">
+          <Key>
+            <PropertyRef Name="Version" />
+            <PropertyRef Name="Created" />
+          </Key>
+          <Property Name="Version" Type="Int64" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AircraftTypeNoEnumsView">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+            <PropertyRef Name="Icao" />
+            <PropertyRef Name="WakeTurbulenceId" />
+            <PropertyRef Name="SpeciesId" />
+            <PropertyRef Name="EngineTypeId" />
+            <PropertyRef Name="EnginePlacementId" />
+            <PropertyRef Name="ModelId" />
+            <PropertyRef Name="Model" />
+            <PropertyRef Name="Manufacturer" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Icao" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulenceId" Type="Int64" Nullable="false" />
+          <Property Name="SpeciesId" Type="Int64" Nullable="false" />
+          <Property Name="EngineTypeId" Type="Int64" Nullable="false" />
+          <Property Name="EnginePlacementId" Type="Int64" Nullable="false" />
+          <Property Name="Engines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ModelId" Type="Int64" Nullable="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturerId" Type="Int64" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AircraftTypeView">
+          <Key>
+            <PropertyRef Name="AircraftTypeId" />
+            <PropertyRef Name="Icao" />
+            <PropertyRef Name="WakeTurbulenceId" />
+            <PropertyRef Name="WakeTurbulence" />
+            <PropertyRef Name="SpeciesId" />
+            <PropertyRef Name="Species" />
+            <PropertyRef Name="EngineTypeId" />
+            <PropertyRef Name="EngineType" />
+            <PropertyRef Name="EnginePlacementId" />
+            <PropertyRef Name="EnginePlacement" />
+            <PropertyRef Name="ModelId" />
+            <PropertyRef Name="Model" />
+            <PropertyRef Name="Manufacturer" />
+          </Key>
+          <Property Name="AircraftTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Icao" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="WakeTurbulenceId" Type="Int64" Nullable="false" />
+          <Property Name="WakeTurbulence" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SpeciesId" Type="Int64" Nullable="false" />
+          <Property Name="Species" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EngineTypeId" Type="Int64" Nullable="false" />
+          <Property Name="EngineType" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EnginePlacementId" Type="Int64" Nullable="false" />
+          <Property Name="EnginePlacement" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="Engines" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ModelId" Type="Int64" Nullable="false" />
+          <Property Name="Model" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturerId" Type="Int64" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CodeBlockView">
+          <Key>
+            <PropertyRef Name="CodeBlockId" />
+            <PropertyRef Name="Country" />
+            <PropertyRef Name="BitMask" />
+            <PropertyRef Name="SignificantBitMask" />
+            <PropertyRef Name="IsMilitary" />
+          </Key>
+          <Property Name="CodeBlockId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int64" />
+          <Property Name="Country" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="BitMask" Type="Int32" Nullable="false" />
+          <Property Name="SignificantBitMask" Type="Int32" Nullable="false" />
+          <Property Name="IsMilitary" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RouteStopView">
+          <Key>
+            <PropertyRef Name="RouteStopId" />
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="AirportId" />
+            <PropertyRef Name="SequenceNo" />
+            <PropertyRef Name="AirportName" />
+            <PropertyRef Name="AirportLocation" />
+            <PropertyRef Name="AirportCountryId" />
+            <PropertyRef Name="AirportCountry" />
+          </Key>
+          <Property Name="RouteStopId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteId" Type="Int64" Nullable="false" />
+          <Property Name="AirportId" Type="Int64" Nullable="false" />
+          <Property Name="SequenceNo" Type="Byte" Nullable="false" />
+          <Property Name="AirportIcao" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="AirportIata" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="AirportName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="AirportLatitude" Type="Double" />
+          <Property Name="AirportLongitude" Type="Double" />
+          <Property Name="AirportAltitude" Type="Int64" />
+          <Property Name="AirportLocation" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="AirportCountryId" Type="Int64" Nullable="false" />
+          <Property Name="AirportCountry" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RouteView">
+          <Key>
+            <PropertyRef Name="RouteId" />
+            <PropertyRef Name="Callsign" />
+            <PropertyRef Name="OperatorId" />
+            <PropertyRef Name="OperatorName" />
+            <PropertyRef Name="FromAirportId" />
+            <PropertyRef Name="FromAirportName" />
+            <PropertyRef Name="FromAirportLocation" />
+            <PropertyRef Name="FromAirportCountryId" />
+            <PropertyRef Name="FromAirportCountry" />
+            <PropertyRef Name="ToAirportId" />
+            <PropertyRef Name="ToAirportName" />
+            <PropertyRef Name="ToAirportLocation" />
+            <PropertyRef Name="ToAirportCountryId" />
+            <PropertyRef Name="ToAirportCountry" />
+          </Key>
+          <Property Name="RouteId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Callsign" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="OperatorId" Type="Int64" Nullable="false" />
+          <Property Name="OperatorIcao" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="OperatorIata" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="OperatorName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="FlightNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="FromAirportId" Type="Int64" Nullable="false" />
+          <Property Name="FromAirportIcao" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="FromAirportIata" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="FromAirportName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="FromAirportLatitude" Type="Double" />
+          <Property Name="FromAirportLongitude" Type="Double" />
+          <Property Name="FromAirportAltitude" Type="Int64" />
+          <Property Name="FromAirportLocation" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="FromAirportCountryId" Type="Int64" Nullable="false" />
+          <Property Name="FromAirportCountry" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ToAirportId" Type="Int64" Nullable="false" />
+          <Property Name="ToAirportIcao" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="ToAirportIata" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="ToAirportName" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ToAirportLatitude" Type="Double" />
+          <Property Name="ToAirportLongitude" Type="Double" />
+          <Property Name="ToAirportAltitude" Type="Int64" />
+          <Property Name="ToAirportLocation" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="ToAirportCountryId" Type="Int64" Nullable="false" />
+          <Property Name="ToAirportCountry" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_AircraftType_0_0">
+          <End Type="StandingData.EnginePlacement" Role="EnginePlacement" Multiplicity="1" />
+          <End Type="StandingData.AircraftType" Role="AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EnginePlacement">
+              <PropertyRef Name="EnginePlacementId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="EnginePlacementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_1_0">
+          <End Type="StandingData.EngineType" Role="EngineType" Multiplicity="1" />
+          <End Type="StandingData.AircraftType" Role="AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EngineType">
+              <PropertyRef Name="EngineTypeId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="EngineTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_2_0">
+          <End Type="StandingData.Species" Role="Species" Multiplicity="1" />
+          <End Type="StandingData.AircraftType" Role="AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Species">
+              <PropertyRef Name="SpeciesId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="SpeciesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftType_3_0">
+          <End Type="StandingData.WakeTurbulence" Role="WakeTurbulence" Multiplicity="1" />
+          <End Type="StandingData.AircraftType" Role="AircraftType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WakeTurbulence">
+              <PropertyRef Name="WakeTurbulenceId" />
+            </Principal>
+            <Dependent Role="AircraftType">
+              <PropertyRef Name="WakeTurbulenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftTypeModel_1_0">
+          <End Type="StandingData.AircraftType" Role="AircraftType" Multiplicity="1" />
+          <End Type="StandingData.AircraftTypeModel" Role="AircraftTypeModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AircraftType">
+              <PropertyRef Name="AircraftTypeId" />
+            </Principal>
+            <Dependent Role="AircraftTypeModel">
+              <PropertyRef Name="AircraftTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AircraftTypeModel_0_0">
+          <End Type="StandingData.Model" Role="Model" Multiplicity="1" />
+          <End Type="StandingData.AircraftTypeModel" Role="AircraftTypeModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Model">
+              <PropertyRef Name="ModelId" />
+            </Principal>
+            <Dependent Role="AircraftTypeModel">
+              <PropertyRef Name="ModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Airport_0_0">
+          <End Type="StandingData.Country" Role="Country" Multiplicity="1" />
+          <End Type="StandingData.Airport" Role="Airport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="Airport">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_0_0">
+          <End Type="StandingData.Airport" Role="Airport" Multiplicity="1" />
+          <End Type="StandingData.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="ToAirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_1_0">
+          <End Type="StandingData.Airport" Role="Airport" Multiplicity="1" />
+          <End Type="StandingData.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="FromAirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteStop_0_0">
+          <End Type="StandingData.Airport" Role="Airport" Multiplicity="1" />
+          <End Type="StandingData.RouteStop" Role="RouteStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Airport">
+              <PropertyRef Name="AirportId" />
+            </Principal>
+            <Dependent Role="RouteStop">
+              <PropertyRef Name="AirportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CodeBlock_0_0">
+          <End Type="StandingData.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="StandingData.CodeBlock" Role="CodeBlock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="CodeBlock">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Model_0_0">
+          <End Type="StandingData.Manufacturer" Role="Manufacturer" Multiplicity="0..1" />
+          <End Type="StandingData.Model" Role="Model" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="Model">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_2_0">
+          <End Type="StandingData.Operator" Role="Operator" Multiplicity="1" />
+          <End Type="StandingData.Route" Role="Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operator">
+              <PropertyRef Name="OperatorId" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="OperatorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RouteStop_1_0">
+          <End Type="StandingData.Route" Role="Route" Multiplicity="1" />
+          <End Type="StandingData.RouteStop" Role="RouteStop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="RouteStop">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="StandingData" />
+        <Alias Key="Target" Value="StandingData.Store" />
+        <EntityContainerMapping CdmEntityContainer="StandingDataContainer" StorageEntityContainer="StandingDataStoreContainer">
+          <EntitySetMapping Name="AircraftTypes">
+            <EntityTypeMapping TypeName="StandingData.AircraftType">
+              <MappingFragment StoreEntitySet="AircraftType">
+                <ScalarProperty Name="Engines" ColumnName="Engines" />
+                <ScalarProperty Name="EnginePlacementId" ColumnName="EnginePlacementId" />
+                <ScalarProperty Name="EngineTypeId" ColumnName="EngineTypeId" />
+                <ScalarProperty Name="SpeciesId" ColumnName="SpeciesId" />
+                <ScalarProperty Name="WakeTurbulenceId" ColumnName="WakeTurbulenceId" />
+                <ScalarProperty Name="Icao" ColumnName="Icao" />
+                <ScalarProperty Name="AircraftTypeId" ColumnName="AircraftTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AircraftTypeModels">
+            <EntityTypeMapping TypeName="StandingData.AircraftTypeModel">
+              <MappingFragment StoreEntitySet="AircraftTypeModel">
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="AircraftTypeId" ColumnName="AircraftTypeId" />
+                <ScalarProperty Name="AircraftTypeModelId" ColumnName="AircraftTypeModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Airports">
+            <EntityTypeMapping TypeName="StandingData.Airport">
+              <MappingFragment StoreEntitySet="Airport">
+                <ScalarProperty Name="Altitude" ColumnName="Altitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Iata" ColumnName="Iata" />
+                <ScalarProperty Name="Icao" ColumnName="Icao" />
+                <ScalarProperty Name="AirportId" ColumnName="AirportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeBlocks">
+            <EntityTypeMapping TypeName="StandingData.CodeBlock">
+              <MappingFragment StoreEntitySet="CodeBlock">
+                <ScalarProperty Name="IsMilitary" ColumnName="IsMilitary" />
+                <ScalarProperty Name="SignificantBitMask" ColumnName="SignificantBitMask" />
+                <ScalarProperty Name="BitMask" ColumnName="BitMask" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CodeBlockId" ColumnName="CodeBlockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="StandingData.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnginePlacements">
+            <EntityTypeMapping TypeName="StandingData.EnginePlacement">
+              <MappingFragment StoreEntitySet="EnginePlacement">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EnginePlacementId" ColumnName="EnginePlacementId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EngineTypes">
+            <EntityTypeMapping TypeName="StandingData.EngineType">
+              <MappingFragment StoreEntitySet="EngineType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EngineTypeId" ColumnName="EngineTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="StandingData.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Models">
+            <EntityTypeMapping TypeName="StandingData.Model">
+              <MappingFragment StoreEntitySet="Model">
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operators">
+            <EntityTypeMapping TypeName="StandingData.Operator">
+              <MappingFragment StoreEntitySet="Operator">
+                <ScalarProperty Name="CharterFlightPattern" ColumnName="CharterFlightPattern" />
+                <ScalarProperty Name="PositioningFlightPattern" ColumnName="PositioningFlightPattern" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Iata" ColumnName="Iata" />
+                <ScalarProperty Name="Icao" ColumnName="Icao" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="StandingData.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="ToAirportId" ColumnName="ToAirportId" />
+                <ScalarProperty Name="FromAirportId" ColumnName="FromAirportId" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="Callsign" ColumnName="Callsign" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteStops">
+            <EntityTypeMapping TypeName="StandingData.RouteStop">
+              <MappingFragment StoreEntitySet="RouteStop">
+                <ScalarProperty Name="AirportId" ColumnName="AirportId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
+                <ScalarProperty Name="RouteStopId" ColumnName="RouteStopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Species">
+            <EntityTypeMapping TypeName="StandingData.Species">
+              <MappingFragment StoreEntitySet="Species">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SpeciesId" ColumnName="SpeciesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WakeTurbulences">
+            <EntityTypeMapping TypeName="StandingData.WakeTurbulence">
+              <MappingFragment StoreEntitySet="WakeTurbulence">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="WakeTurbulenceId" ColumnName="WakeTurbulenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DatabaseVersions">
+            <EntityTypeMapping TypeName="StandingData.DatabaseVersion">
+              <MappingFragment StoreEntitySet="DatabaseVersion">
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AircraftTypeNoEnumsViews">
+            <EntityTypeMapping TypeName="StandingData.AircraftTypeNoEnumsView">
+              <MappingFragment StoreEntitySet="AircraftTypeNoEnumsView">
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Engines" ColumnName="Engines" />
+                <ScalarProperty Name="EnginePlacementId" ColumnName="EnginePlacementId" />
+                <ScalarProperty Name="EngineTypeId" ColumnName="EngineTypeId" />
+                <ScalarProperty Name="SpeciesId" ColumnName="SpeciesId" />
+                <ScalarProperty Name="WakeTurbulenceId" ColumnName="WakeTurbulenceId" />
+                <ScalarProperty Name="Icao" ColumnName="Icao" />
+                <ScalarProperty Name="AircraftTypeId" ColumnName="AircraftTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AircraftTypeViews">
+            <EntityTypeMapping TypeName="StandingData.AircraftTypeView">
+              <MappingFragment StoreEntitySet="AircraftTypeView">
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ModelId" ColumnName="ModelId" />
+                <ScalarProperty Name="Engines" ColumnName="Engines" />
+                <ScalarProperty Name="EnginePlacement" ColumnName="EnginePlacement" />
+                <ScalarProperty Name="EnginePlacementId" ColumnName="EnginePlacementId" />
+                <ScalarProperty Name="EngineType" ColumnName="EngineType" />
+                <ScalarProperty Name="EngineTypeId" ColumnName="EngineTypeId" />
+                <ScalarProperty Name="Species" ColumnName="Species" />
+                <ScalarProperty Name="SpeciesId" ColumnName="SpeciesId" />
+                <ScalarProperty Name="WakeTurbulence" ColumnName="WakeTurbulence" />
+                <ScalarProperty Name="WakeTurbulenceId" ColumnName="WakeTurbulenceId" />
+                <ScalarProperty Name="Icao" ColumnName="Icao" />
+                <ScalarProperty Name="AircraftTypeId" ColumnName="AircraftTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeBlockViews">
+            <EntityTypeMapping TypeName="StandingData.CodeBlockView">
+              <MappingFragment StoreEntitySet="CodeBlockView">
+                <ScalarProperty Name="IsMilitary" ColumnName="IsMilitary" />
+                <ScalarProperty Name="SignificantBitMask" ColumnName="SignificantBitMask" />
+                <ScalarProperty Name="BitMask" ColumnName="BitMask" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CodeBlockId" ColumnName="CodeBlockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteStopViews">
+            <EntityTypeMapping TypeName="StandingData.RouteStopView">
+              <MappingFragment StoreEntitySet="RouteStopView">
+                <ScalarProperty Name="AirportCountry" ColumnName="AirportCountry" />
+                <ScalarProperty Name="AirportCountryId" ColumnName="AirportCountryId" />
+                <ScalarProperty Name="AirportLocation" ColumnName="AirportLocation" />
+                <ScalarProperty Name="AirportAltitude" ColumnName="AirportAltitude" />
+                <ScalarProperty Name="AirportLongitude" ColumnName="AirportLongitude" />
+                <ScalarProperty Name="AirportLatitude" ColumnName="AirportLatitude" />
+                <ScalarProperty Name="AirportName" ColumnName="AirportName" />
+                <ScalarProperty Name="AirportIata" ColumnName="AirportIata" />
+                <ScalarProperty Name="AirportIcao" ColumnName="AirportIcao" />
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
+                <ScalarProperty Name="AirportId" ColumnName="AirportId" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+                <ScalarProperty Name="RouteStopId" ColumnName="RouteStopId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RouteViews">
+            <EntityTypeMapping TypeName="StandingData.RouteView">
+              <MappingFragment StoreEntitySet="RouteView">
+                <ScalarProperty Name="ToAirportCountry" ColumnName="ToAirportCountry" />
+                <ScalarProperty Name="ToAirportCountryId" ColumnName="ToAirportCountryId" />
+                <ScalarProperty Name="ToAirportLocation" ColumnName="ToAirportLocation" />
+                <ScalarProperty Name="ToAirportAltitude" ColumnName="ToAirportAltitude" />
+                <ScalarProperty Name="ToAirportLongitude" ColumnName="ToAirportLongitude" />
+                <ScalarProperty Name="ToAirportLatitude" ColumnName="ToAirportLatitude" />
+                <ScalarProperty Name="ToAirportName" ColumnName="ToAirportName" />
+                <ScalarProperty Name="ToAirportIata" ColumnName="ToAirportIata" />
+                <ScalarProperty Name="ToAirportIcao" ColumnName="ToAirportIcao" />
+                <ScalarProperty Name="ToAirportId" ColumnName="ToAirportId" />
+                <ScalarProperty Name="FromAirportCountry" ColumnName="FromAirportCountry" />
+                <ScalarProperty Name="FromAirportCountryId" ColumnName="FromAirportCountryId" />
+                <ScalarProperty Name="FromAirportLocation" ColumnName="FromAirportLocation" />
+                <ScalarProperty Name="FromAirportAltitude" ColumnName="FromAirportAltitude" />
+                <ScalarProperty Name="FromAirportLongitude" ColumnName="FromAirportLongitude" />
+                <ScalarProperty Name="FromAirportLatitude" ColumnName="FromAirportLatitude" />
+                <ScalarProperty Name="FromAirportName" ColumnName="FromAirportName" />
+                <ScalarProperty Name="FromAirportIata" ColumnName="FromAirportIata" />
+                <ScalarProperty Name="FromAirportIcao" ColumnName="FromAirportIcao" />
+                <ScalarProperty Name="FromAirportId" ColumnName="FromAirportId" />
+                <ScalarProperty Name="FlightNumber" ColumnName="FlightNumber" />
+                <ScalarProperty Name="OperatorName" ColumnName="OperatorName" />
+                <ScalarProperty Name="OperatorIata" ColumnName="OperatorIata" />
+                <ScalarProperty Name="OperatorIcao" ColumnName="OperatorIcao" />
+                <ScalarProperty Name="OperatorId" ColumnName="OperatorId" />
+                <ScalarProperty Name="Callsign" ColumnName="Callsign" />
+                <ScalarProperty Name="RouteId" ColumnName="RouteId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

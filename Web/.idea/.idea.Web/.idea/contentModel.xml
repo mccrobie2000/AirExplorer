@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2018.1/system/resharper-host/local/Transient/ReSharperHost/v12/SolutionCaches/_Web.803767485.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$/../BusinessServices" t="IncludeRecursive">
+      <e p="AirportBusinessService.cs" t="Include" />
+      <e p="BusinessServices.csproj" t="IncludeRecursive" />
+      <e p="Models" t="Include">
+        <e p="AirportDTO.cs" t="Include" />
+        <e p="AirportDTOList.cs" t="Include" />
+        <e p="AirportNearByDTO.cs" t="Include" />
+        <e p="AirportNearByDTOList.cs" t="Include" />
+        <e p="CountryDTO.cs" t="Include" />
+        <e p="CountryDTOList.cs" t="Include" />
+      </e>
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="app.config" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+    </e>
+    <e p="$PROJECT_DIR$/../DataServices" t="IncludeRecursive">
+      <e p="Abstract" t="Include">
+        <e p="IDataServices.cs" t="Include" />
+      </e>
+      <e p="App.config" t="Include" />
+      <e p="Class1.cs" t="Include" />
+      <e p="Concrete" t="Include">
+        <e p="DataServices.cs" t="Include" />
+      </e>
+      <e p="Configuration" t="Include">
+        <e p="OrderBySection.cs" t="Include" />
+      </e>
+      <e p="DataServices.csproj" t="IncludeRecursive" />
+      <e p="GeoLocation.cs" t="Include" />
+      <e p="Models" t="Include">
+        <e p="AirportList.cs" t="Include" />
+        <e p="CountryList.cs" t="Include" />
+      </e>
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages.config" t="Include" />
+    </e>
+    <e p="$PROJECT_DIR$/../OrderBy" t="IncludeRecursive">
+      <e p="App.config" t="Include" />
+      <e p="Configuration" t="Include">
+        <e p="OrderBySection.cs" t="Include" />
+      </e>
+      <e p="OrderBy.cs" t="Include" />
+      <e p="OrderBy.csproj" t="IncludeRecursive" />
+      <e p="OrderByExtensions.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages.config" t="Include" />
+    </e>
+    <e p="$PROJECT_DIR$/../VirtualRadarServer" t="IncludeRecursive">
+      <e p="Database" t="Include">
+        <e p="StandingData.sqb" t="Include" />
+      </e>
+      <e p="DesignTimeServices.cs" t="Include" />
+      <e p="Makefile" t="Include" />
+      <e p="Models" t="Include">
+        <e p="Airport.cs" t="Include" />
+        <e p="Country.cs" t="Include" />
+        <e p="MyStandingDataContainer.cs" t="Include" />
+        <e p="StandingDataContainer.cs" t="Include" />
+      </e>
+      <e p="VirtualRadarServer.csproj" t="IncludeRecursive" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+    </e>
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".bowerrc" t="Include" />
+      <e p="App_Data" t="Include">
+        <e p="StandingData.sqb" t="Include" />
+      </e>
+      <e p="Areas" t="Include">
+        <e p="Explorer" t="Include">
+          <e p="Controllers" t="Include">
+            <e p="ExplorerController.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="AirportModel.cs" t="Include" />
+            <e p="AirportsNearByModel.cs" t="Include" />
+            <e p="CountryModel.cs" t="Include" />
+            <e p="ExplorerModel.cs" t="Include" />
+          </e>
+          <e p="Views" t="Include">
+            <e p="Explorer" t="Include">
+              <e p="Explorer.cshtml" t="Include" />
+              <e p="_AirportGrid.cshtml" t="Include" />
+              <e p="_AirportInformation.cshtml" t="Include" />
+              <e p="_AirportsNearBy.cshtml" t="Include" />
+              <e p="_CountryAirportsGrid.cshtml" t="Include" />
+              <e p="_CountryGrid.cshtml" t="Include" />
+              <e p="_CountryInformation.cshtml" t="Include" />
+            </e>
+            <e p="Shared" t="Include">
+              <e p="DisplayTemplates" t="Include">
+                <e p="AirportInformation.cshtml" t="Include" />
+                <e p="FlightTable.cshtml" t="Include" />
+              </e>
+              <e p="_Layout.cshtml" t="Include" />
+            </e>
+            <e p="_ViewStart.cshtml" t="Include" />
+            <e p="web.config" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Content" t="Include">
+        <e p="Site.css" t="Include" />
+        <e p="bootstrap-theme.css" t="Include" />
+        <e p="bootstrap-theme.css.map" t="Include" />
+        <e p="bootstrap-theme.min.css" t="Include" />
+        <e p="bootstrap-theme.min.css.map" t="Include" />
+        <e p="bootstrap.css" t="Include" />
+        <e p="bootstrap.css.map" t="Include" />
+        <e p="bootstrap.min.css" t="Include" />
+        <e p="bootstrap.min.css.map" t="Include" />
+      </e>
+      <e p="Controllers" t="Include">
+        <e p="HomeController.cs" t="Include" />
+      </e>
+      <e p="Models" t="Include">
+        <e p="ErrorViewModel.cs" t="Include" />
+      </e>
+      <e p="Program.cs" t="Include" />
+      <e p="Scripts" t="Include">
+        <e p="_references.js" t="Include" />
+        <e p="bootstrap.js" t="Include" />
+        <e p="bootstrap.min.js" t="Include" />
+        <e p="event_stream.js" t="Include" />
+        <e p="free-jqgrid" t="Include">
+          <e p="css" t="Include">
+            <e p="ui.jqgrid.css" t="Include" />
+            <e p="ui.jqgrid.min.css" t="Include" />
+            <e p="ui.jqgrid.min.css.map" t="Include" />
+          </e>
+          <e p="i18n" t="Include">
+            <e p="grid.locale-ar.js" t="Include" />
+            <e p="grid.locale-bg.js" t="Include" />
+            <e p="grid.locale-bs.js" t="Include" />
+            <e p="grid.locale-ca.js" t="Include" />
+            <e p="grid.locale-cn.js" t="Include" />
+            <e p="grid.locale-cs.js" t="Include" />
+            <e p="grid.locale-da.js" t="Include" />
+            <e p="grid.locale-de.js" t="Include" />
+            <e p="grid.locale-el.js" t="Include" />
+            <e p="grid.locale-en.js" t="Include" />
+            <e p="grid.locale-es.js" t="Include" />
+            <e p="grid.locale-fa.js" t="Include" />
+            <e p="grid.locale-fi.js" t="Include" />
+            <e p="grid.locale-fr.js" t="Include" />
+            <e p="grid.locale-gl.js" t="Include" />
+            <e p="grid.locale-he.js" t="Include" />
+            <e p="grid.locale-hr.js" t="Include" />
+            <e p="grid.locale-hu.js" t="Include" />
+            <e p="grid.locale-id.js" t="Include" />
+            <e p="grid.locale-is.js" t="Include" />
+            <e p="grid.locale-it.js" t="Include" />
+            <e p="grid.locale-ja.js" t="Include" />
+            <e p="grid.locale-kr.js" t="Include" />
+            <e p="grid.locale-lt.js" t="Include" />
+            <e p="grid.locale-me.js" t="Include" />
+            <e p="grid.locale-nl.js" t="Include" />
+            <e p="grid.locale-no.js" t="Include" />
+            <e p="grid.locale-pl.js" t="Include" />
+            <e p="grid.locale-pt-br.js" t="Include" />
+            <e p="grid.locale-pt.js" t="Include" />
+            <e p="grid.locale-ro.js" t="Include" />
+            <e p="grid.locale-ru.js" t="Include" />
+            <e p="grid.locale-sk.js" t="Include" />
+            <e p="grid.locale-sr.js" t="Include" />
+            <e p="grid.locale-sv.js" t="Include" />
+            <e p="grid.locale-th.js" t="Include" />
+            <e p="grid.locale-tr.js" t="Include" />
+            <e p="grid.locale-tw.js" t="Include" />
+            <e p="grid.locale-ua.js" t="Include" />
+            <e p="grid.locale-vi.js" t="Include" />
+            <e p="min" t="Include">
+              <e p="grid.locale-ar.js" t="Include" />
+              <e p="grid.locale-ar.js.map" t="Include" />
+              <e p="grid.locale-bg.js" t="Include" />
+              <e p="grid.locale-bg.js.map" t="Include" />
+              <e p="grid.locale-ca.js" t="Include" />
+              <e p="grid.locale-ca.js.map" t="Include" />
+              <e p="grid.locale-cn.js" t="Include" />
+              <e p="grid.locale-cn.js.map" t="Include" />
+              <e p="grid.locale-cs.js" t="Include" />
+              <e p="grid.locale-cs.js.map" t="Include" />
+              <e p="grid.locale-da.js" t="Include" />
+              <e p="grid.locale-da.js.map" t="Include" />
+              <e p="grid.locale-de.js" t="Include" />
+              <e p="grid.locale-de.js.map" t="Include" />
+              <e p="grid.locale-el.js" t="Include" />
+              <e p="grid.locale-el.js.map" t="Include" />
+              <e p="grid.locale-en.js" t="Include" />
+              <e p="grid.locale-en.js.map" t="Include" />
+              <e p="grid.locale-es.js" t="Include" />
+              <e p="grid.locale-es.js.map" t="Include" />
+              <e p="grid.locale-fa.js" t="Include" />
+              <e p="grid.locale-fa.js.map" t="Include" />
+              <e p="grid.locale-fi.js" t="Include" />
+              <e p="grid.locale-fi.js.map" t="Include" />
+              <e p="grid.locale-fr.js" t="Include" />
+              <e p="grid.locale-fr.js.map" t="Include" />
+              <e p="grid.locale-gl.js" t="Include" />
+              <e p="grid.locale-gl.js.map" t="Include" />
+              <e p="grid.locale-he.js" t="Include" />
+              <e p="grid.locale-he.js.map" t="Include" />
+              <e p="grid.locale-hr.js" t="Include" />
+              <e p="grid.locale-hr.js.map" t="Include" />
+              <e p="grid.locale-hu.js" t="Include" />
+              <e p="grid.locale-hu.js.map" t="Include" />
+              <e p="grid.locale-id.js" t="Include" />
+              <e p="grid.locale-id.js.map" t="Include" />
+              <e p="grid.locale-is.js" t="Include" />
+              <e p="grid.locale-is.js.map" t="Include" />
+              <e p="grid.locale-it.js" t="Include" />
+              <e p="grid.locale-it.js.map" t="Include" />
+              <e p="grid.locale-ja.js" t="Include" />
+              <e p="grid.locale-ja.js.map" t="Include" />
+              <e p="grid.locale-kr.js" t="Include" />
+              <e p="grid.locale-kr.js.map" t="Include" />
+              <e p="grid.locale-lt.js" t="Include" />
+              <e p="grid.locale-lt.js.map" t="Include" />
+              <e p="grid.locale-me.js" t="Include" />
+              <e p="grid.locale-me.js.map" t="Include" />
+              <e p="grid.locale-nl.js" t="Include" />
+              <e p="grid.locale-nl.js.map" t="Include" />
+              <e p="grid.locale-no.js" t="Include" />
+              <e p="grid.locale-no.js.map" t="Include" />
+              <e p="grid.locale-pl.js" t="Include" />
+              <e p="grid.locale-pl.js.map" t="Include" />
+              <e p="grid.locale-pt-br.js" t="Include" />
+              <e p="grid.locale-pt-br.js.map" t="Include" />
+              <e p="grid.locale-pt.js" t="Include" />
+              <e p="grid.locale-pt.js.map" t="Include" />
+              <e p="grid.locale-ro.js" t="Include" />
+              <e p="grid.locale-ro.js.map" t="Include" />
+              <e p="grid.locale-ru.js" t="Include" />
+              <e p="grid.locale-ru.js.map" t="Include" />
+              <e p="grid.locale-sk.js" t="Include" />
+              <e p="grid.locale-sk.js.map" t="Include" />
+              <e p="grid.locale-sr.js" t="Include" />
+              <e p="grid.locale-sr.js.map" t="Include" />
+              <e p="grid.locale-sv.js" t="Include" />
+              <e p="grid.locale-sv.js.map" t="Include" />
+              <e p="grid.locale-th.js" t="Include" />
+              <e p="grid.locale-th.js.map" t="Include" />
+              <e p="grid.locale-tr.js" t="Include" />
+              <e p="grid.locale-tr.js.map" t="Include" />
+              <e p="grid.locale-tw.js" t="Include" />
+              <e p="grid.locale-tw.js.map" t="Include" />
+              <e p="grid.locale-ua.js" t="Include" />
+              <e p="grid.locale-ua.js.map" t="Include" />
+              <e p="grid.locale-vi.js" t="Include" />
+              <e p="grid.locale-vi.js.map" t="Include" />
+            </e>
+          </e>
+          <e p="jquery.jqgrid.min.js" t="Include" />
+          <e p="jquery.jqgrid.min.js.map" t="Include" />
+          <e p="jquery.jqgrid.src.js" t="Include" />
+          <e p="modules" t="Include">
+            <e p="grid.base.js" t="Include" />
+            <e p="grid.celledit.js" t="Include" />
+            <e p="grid.common.js" t="Include" />
+            <e p="grid.custom.js" t="Include" />
+            <e p="grid.filter.js" t="Include" />
+            <e p="grid.formedit.js" t="Include" />
+            <e p="grid.grouping.js" t="Include" />
+            <e p="grid.import.js" t="Include" />
+            <e p="grid.inlinedit.js" t="Include" />
+            <e p="grid.jqueryui.js" t="Include" />
+            <e p="grid.pivot.js" t="Include" />
+            <e p="grid.subgrid.js" t="Include" />
+            <e p="grid.tbltogrid.js" t="Include" />
+            <e p="grid.treegrid.js" t="Include" />
+            <e p="jqdnr.js" t="Include" />
+            <e p="jqmodal.js" t="Include" />
+            <e p="jquery.fmatter.js" t="Include" />
+            <e p="jsonxml.js" t="Include" />
+            <e p="min" t="Include">
+              <e p="grid.base.js" t="Include" />
+              <e p="grid.base.js.map" t="Include" />
+              <e p="grid.celledit.js" t="Include" />
+              <e p="grid.celledit.js.map" t="Include" />
+              <e p="grid.common.js" t="Include" />
+              <e p="grid.common.js.map" t="Include" />
+              <e p="grid.custom.js" t="Include" />
+              <e p="grid.custom.js.map" t="Include" />
+              <e p="grid.filter.js" t="Include" />
+              <e p="grid.filter.js.map" t="Include" />
+              <e p="grid.formedit.js" t="Include" />
+              <e p="grid.formedit.js.map" t="Include" />
+              <e p="grid.grouping.js" t="Include" />
+              <e p="grid.grouping.js.map" t="Include" />
+              <e p="grid.import.js" t="Include" />
+              <e p="grid.import.js.map" t="Include" />
+              <e p="grid.inlinedit.js" t="Include" />
+              <e p="grid.inlinedit.js.map" t="Include" />
+              <e p="grid.jqueryui.js" t="Include" />
+              <e p="grid.jqueryui.js.map" t="Include" />
+              <e p="grid.pivot.js" t="Include" />
+              <e p="grid.pivot.js.map" t="Include" />
+              <e p="grid.subgrid.js" t="Include" />
+              <e p="grid.subgrid.js.map" t="Include" />
+              <e p="grid.tbltogrid.js" t="Include" />
+              <e p="grid.tbltogrid.js.map" t="Include" />
+              <e p="grid.treegrid.js" t="Include" />
+              <e p="grid.treegrid.js.map" t="Include" />
+              <e p="jqdnr.js" t="Include" />
+              <e p="jqdnr.js.map" t="Include" />
+              <e p="jqmodal.js" t="Include" />
+              <e p="jqmodal.js.map" t="Include" />
+              <e p="jquery.fmatter.js" t="Include" />
+              <e p="jquery.fmatter.js.map" t="Include" />
+              <e p="jsonxml.js" t="Include" />
+              <e p="jsonxml.js.map" t="Include" />
+            </e>
+          </e>
+          <e p="plugins" t="Include">
+            <e p="css" t="Include">
+              <e p="ui.multiselect.css" t="Include" />
+              <e p="ui.multiselect.min.css" t="Include" />
+              <e p="ui.multiselect.min.css.map" t="Include" />
+            </e>
+            <e p="grid.odata.js" t="Include" />
+            <e p="jquery.contextmenu-ui.js" t="Include" />
+            <e p="jquery.contextmenu.js" t="Include" />
+            <e p="jquery.createcontexmenufromnavigatorbuttons.js" t="Include" />
+            <e p="jquery.jqgrid.showhidecolumnmenu.js" t="Include" />
+            <e p="min" t="Include">
+              <e p="grid.odata.js" t="Include" />
+              <e p="grid.odata.js.map" t="Include" />
+              <e p="jquery.contextmenu-ui.js" t="Include" />
+              <e p="jquery.contextmenu-ui.js.map" t="Include" />
+              <e p="jquery.contextmenu.js" t="Include" />
+              <e p="jquery.contextmenu.js.map" t="Include" />
+              <e p="jquery.createcontexmenufromnavigatorbuttons.js" t="Include" />
+              <e p="jquery.createcontexmenufromnavigatorbuttons.js.map" t="Include" />
+              <e p="jquery.jqgrid.showhidecolumnmenu.js" t="Include" />
+              <e p="jquery.jqgrid.showhidecolumnmenu.js.map" t="Include" />
+              <e p="ui.multiselect.js" t="Include" />
+              <e p="ui.multiselect.js.map" t="Include" />
+            </e>
+            <e p="ui.multiselect.js" t="Include" />
+          </e>
+        </e>
+        <e p="jqgrid" t="Include">
+          <e p="css" t="Include">
+            <e p="images" t="Include">
+              <e p="animated-overlay.gif" t="Include" />
+              <e p="code.png" t="Include" />
+              <e p="php.png" t="Include" />
+              <e p="ui-bg_flat_55_999999_40x100.png" t="Include" />
+              <e p="ui-bg_flat_75_aaaaaa_40x100.png" t="Include" />
+              <e p="ui-bg_glass_45_0078ae_1x400.png" t="Include" />
+              <e p="ui-bg_glass_55_f8da4e_1x400.png" t="Include" />
+              <e p="ui-bg_glass_75_79c9ec_1x400.png" t="Include" />
+              <e p="ui-bg_gloss-wave_45_e14f1c_500x100.png" t="Include" />
+              <e p="ui-bg_gloss-wave_50_6eac2c_500x100.png" t="Include" />
+              <e p="ui-bg_gloss-wave_75_2191c0_500x100.png" t="Include" />
+              <e p="ui-bg_inset-hard_100_fcfdfd_1x100.png" t="Include" />
+              <e p="ui-icons_0078ae_256x240.png" t="Include" />
+              <e p="ui-icons_056b93_256x240.png" t="Include" />
+              <e p="ui-icons_d8e7f3_256x240.png" t="Include" />
+              <e p="ui-icons_e0fdff_256x240.png" t="Include" />
+              <e p="ui-icons_f5e175_256x240.png" t="Include" />
+              <e p="ui-icons_f7a50d_256x240.png" t="Include" />
+              <e p="ui-icons_fcd113_256x240.png" t="Include" />
+            </e>
+            <e p="jquery-ui-timepicker-addon.css" t="Include" />
+            <e p="jquery-ui.css" t="Include" />
+            <e p="prettify.css" t="Include" />
+            <e p="trirand" t="Include">
+              <e p="addons" t="Include">
+                <e p="ui.multiselect.css" t="Include" />
+              </e>
+              <e p="ui-anim_basic_16x16_2.gif" t="Include" />
+              <e p="ui.jqgrid-bootstrap-ui.css" t="Include" />
+              <e p="ui.jqgrid-bootstrap.css" t="Include" />
+              <e p="ui.jqgrid-bootstrap4.css" t="Include" />
+              <e p="ui.jqgrid.css" t="Include" />
+            </e>
+            <e p="ui.multiselect.css" t="Include" />
+          </e>
+          <e p="i18n" t="Include">
+            <e p="grid.locale-ar.js" t="Include" />
+            <e p="grid.locale-bg.js" t="Include" />
+            <e p="grid.locale-ca.js" t="Include" />
+            <e p="grid.locale-cn.js" t="Include" />
+            <e p="grid.locale-cs.js" t="Include" />
+            <e p="grid.locale-de.js" t="Include" />
+            <e p="grid.locale-dk.js" t="Include" />
+            <e p="grid.locale-el.js" t="Include" />
+            <e p="grid.locale-en.js" t="Include" />
+            <e p="grid.locale-es.js" t="Include" />
+            <e p="grid.locale-fa.js" t="Include" />
+            <e p="grid.locale-fi.js" t="Include" />
+            <e p="grid.locale-fr.js" t="Include" />
+            <e p="grid.locale-gl.js" t="Include" />
+            <e p="grid.locale-he.js" t="Include" />
+            <e p="grid.locale-hr.js" t="Include" />
+            <e p="grid.locale-hu.js" t="Include" />
+            <e p="grid.locale-id.js" t="Include" />
+            <e p="grid.locale-is.js" t="Include" />
+            <e p="grid.locale-it.js" t="Include" />
+            <e p="grid.locale-ja.js" t="Include" />
+            <e p="grid.locale-kr.js" t="Include" />
+            <e p="grid.locale-lt.js" t="Include" />
+            <e p="grid.locale-me.js" t="Include" />
+            <e p="grid.locale-nl.js" t="Include" />
+            <e p="grid.locale-no.js" t="Include" />
+            <e p="grid.locale-pl.js" t="Include" />
+            <e p="grid.locale-pt-br.js" t="Include" />
+            <e p="grid.locale-pt.js" t="Include" />
+            <e p="grid.locale-ro.js" t="Include" />
+            <e p="grid.locale-ru.js" t="Include" />
+            <e p="grid.locale-sk.js" t="Include" />
+            <e p="grid.locale-sq.js" t="Include" />
+            <e p="grid.locale-sr-latin.js" t="Include" />
+            <e p="grid.locale-sr.js" t="Include" />
+            <e p="grid.locale-sv.js" t="Include" />
+            <e p="grid.locale-th.js" t="Include" />
+            <e p="grid.locale-tr.js" t="Include" />
+            <e p="grid.locale-tw.js" t="Include" />
+            <e p="grid.locale-ua.js" t="Include" />
+            <e p="grid.locale-uk.js" t="Include" />
+            <e p="grid.locale-vi.js" t="Include" />
+          </e>
+          <e p="jquery.jqGrid.min.js" t="Include" />
+        </e>
+        <e p="jquery-1.10.2.intellisense.js" t="Include" />
+        <e p="jquery-1.10.2.js" t="Include" />
+        <e p="jquery-1.10.2.min.js" t="Include" />
+        <e p="jquery-1.10.2.min.map" t="Include" />
+        <e p="jquery-ui" t="Include">
+          <e p="external" t="Include">
+            <e p="jquery" t="Include">
+              <e p="jquery.js" t="Include" />
+            </e>
+          </e>
+          <e p="images" t="Include">
+            <e p="ui-icons_444444_256x240.png" t="Include" />
+            <e p="ui-icons_555555_256x240.png" t="Include" />
+            <e p="ui-icons_777620_256x240.png" t="Include" />
+            <e p="ui-icons_777777_256x240.png" t="Include" />
+            <e p="ui-icons_cc0000_256x240.png" t="Include" />
+            <e p="ui-icons_ffffff_256x240.png" t="Include" />
+          </e>
+          <e p="jquery-ui.min.css" t="Include" />
+          <e p="jquery-ui.min.js" t="Include" />
+          <e p="jquery-ui.structure.min.css" t="Include" />
+          <e p="jquery-ui.theme.min.css" t="Include" />
+        </e>
+        <e p="jquery.validate-vsdoc.js" t="Include" />
+        <e p="jquery.validate.js" t="Include" />
+        <e p="jquery.validate.min.js" t="Include" />
+        <e p="jquery.validate.unobtrusive.js" t="Include" />
+        <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+        <e p="modernizr-2.6.2.js" t="Include" />
+        <e p="respond.js" t="Include" />
+        <e p="respond.min.js" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+      <e p="Utilities" t="Include">
+        <e p="AddVersionInformationFilter.cs" t="Include" />
+        <e p="RenderHelper.cs" t="Include" />
+      </e>
+      <e p="Views" t="Include">
+        <e p="Home" t="Include">
+          <e p="About.cshtml" t="Include" />
+          <e p="Contact.cshtml" t="Include" />
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="Shared" t="Include">
+          <e p="Error.cshtml" t="Include" />
+          <e p="_Layout.cshtml" t="Include" />
+          <e p="_ValidationScriptsPartial.cshtml" t="Include" />
+        </e>
+        <e p="_ViewImports.cshtml" t="Include" />
+        <e p="_ViewStart.cshtml" t="Include" />
+      </e>
+      <e p="Web.config" t="Include" />
+      <e p="Web.csproj" t="IncludeRecursive" />
+      <e p="Web.sln" t="IncludeFlat" />
+      <e p="appsettings.Development.json" t="Include" />
+      <e p="appsettings.json" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="bower.json" t="Include" />
+      <e p="bundleconfig.json" t="Include" />
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.0" t="Include">
+            <e p="Web.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="wwwroot" t="Include">
+        <e p="css" t="Include">
+          <e p="site.css" t="Include" />
+          <e p="site.min.css" t="Include" />
+        </e>
+        <e p="favicon.ico" t="Include" />
+        <e p="images" t="Include">
+          <e p="banner1.svg" t="Include" />
+          <e p="banner2.svg" t="Include" />
+          <e p="banner3.svg" t="Include" />
+          <e p="banner4.svg" t="Include" />
+        </e>
+        <e p="js" t="Include">
+          <e p="site.js" t="Include" />
+          <e p="site.min.js" t="Include" />
+        </e>
+        <e p="lib" t="Include">
+          <e p="bootstrap" t="Include">
+            <e p=".bower.json" t="Include" />
+            <e p="LICENSE" t="Include" />
+            <e p="dist" t="Include">
+              <e p="css" t="Include">
+                <e p="bootstrap-theme.css" t="Include" />
+                <e p="bootstrap-theme.css.map" t="Include" />
+                <e p="bootstrap-theme.min.css" t="Include" />
+                <e p="bootstrap-theme.min.css.map" t="Include" />
+                <e p="bootstrap.css" t="Include" />
+                <e p="bootstrap.css.map" t="Include" />
+                <e p="bootstrap.min.css" t="Include" />
+                <e p="bootstrap.min.css.map" t="Include" />
+              </e>
+              <e p="fonts" t="Include">
+                <e p="glyphicons-halflings-regular.eot" t="Include" />
+                <e p="glyphicons-halflings-regular.svg" t="Include" />
+                <e p="glyphicons-halflings-regular.ttf" t="Include" />
+                <e p="glyphicons-halflings-regular.woff" t="Include" />
+                <e p="glyphicons-halflings-regular.woff2" t="Include" />
+              </e>
+              <e p="js" t="Include">
+                <e p="bootstrap.js" t="Include" />
+                <e p="bootstrap.min.js" t="Include" />
+                <e p="npm.js" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="jquery" t="Include">
+            <e p=".bower.json" t="Include" />
+            <e p="LICENSE.txt" t="Include" />
+            <e p="dist" t="Include">
+              <e p="jquery.js" t="Include" />
+              <e p="jquery.min.js" t="Include" />
+              <e p="jquery.min.map" t="Include" />
+            </e>
+          </e>
+          <e p="jquery-validation" t="Include">
+            <e p=".bower.json" t="Include" />
+            <e p="LICENSE.md" t="Include" />
+            <e p="dist" t="Include">
+              <e p="additional-methods.js" t="Include" />
+              <e p="additional-methods.min.js" t="Include" />
+              <e p="jquery.validate.js" t="Include" />
+              <e p="jquery.validate.min.js" t="Include" />
+            </e>
+          </e>
+          <e p="jquery-validation-unobtrusive" t="Include">
+            <e p=".bower.json" t="Include" />
+            <e p="jquery.validate.unobtrusive.js" t="Include" />
+            <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="$PROJECT_DIR$/../WebControls" t="IncludeRecursive">
+      <e p="Properties" t="Include">
+        <e p="AssemblyInfo.cs" t="Include" />
+      </e>
+      <e p="WebControls.cs" t="Include" />
+      <e p="WebControls.csproj" t="IncludeRecursive" />
+      <e p="app.config" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages.config" t="Include" />
+    </e>
+  </component>
+</project>

@@ -1,0 +1,80 @@
+﻿@using WebControls
+@using Web.Areas.Explorer.Models
+@using BusinessServices.Models
+@model CountryModel
+
+@{
+    var myName = ViewData["myAirportGridName"].ToString();
+    if (string.IsNullOrEmpty(myName))
+    {
+        throw new ArgumentException($"myAirportGridName must be passed in ViewData");
+    }
+}
+
+<script>
+    var onCountryAirportSelected = function (rowId) {
+            var rowData = $('#@myName').getRowData(rowId);
+
+            var data = {
+                airportId: rowData.AirportId
+            };
+            $.post(
+                '@Url.Action("Airport", "Explorer")',
+                data,
+                function (data) {
+                    window.EventBus.publish("countryAirportDataChanged", data);
+
+                    var position = { latitude: rowData.Latitude, longitude: rowData.Longitude, callLetters: rowData.Name + '\n(' + rowData.Icao + ')', altitude: rowData.Altitude };
+                    window.EventBus.publish("positionChanged", position);
+                }
+            );
+
+            return false;
+    }
+
+    var firstLoad = true;
+
+    var onCountryAirportLoaded = function () {
+        if (firstLoad) {
+            firstLoad = false;
+            var ids = $('#@myName').jqGrid('getDataIDs');
+            if (ids.length > 0) {
+                var rowData = $('#@myName').getRowData(ids[0]);
+
+                var position = { latitude: rowData.Latitude, longitude: rowData.Longitude, callLetters: rowData.Name + '\n(' + rowData.Icao + ')', altitude: rowData.Altitude };
+                window.EventBus.publish("positionChanged", position);
+            }
+        }
+    }
+</script>
+
+@(Html.For<AirportDTO>().WebControls().Grid(Model.Country.Airports)
+                .Name(myName)
+                .Caption("Airports")
+                .Width(400)
+                .Columns(columns =>
+                {
+                    columns.Bound(m => m.AirportId).Hidden().Key();
+                    columns.Bound(m => m.Name).Sortable();
+                    columns.Bound(m => m.Icao).Sortable();
+                    columns.Bound(m => m.CountryName).Sortable();
+                    columns.Bound(m => m.Latitude).Hidden();
+                    columns.Bound(m => m.Longitude).Hidden();
+                    columns.Bound(m => m.Icao).Hidden();
+                    columns.Bound(m => m.Altitude).Hidden();
+                })
+                .DataSource(source =>
+                {
+                    source.Ajax().Read(reader =>
+                    {
+                        reader.Action("CountryAirports", "Explorer", new { countryId = Model.Country.CountryId });
+                    });
+                })
+                .Events(events =>
+                {
+                    events.SelectRow("onCountryAirportSelected");
+                    events.LoadComplete("onCountryAirportLoaded");
+                })
+)
+
+

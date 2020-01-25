@@ -1,0 +1,69 @@
+﻿@using DataServices.Models
+@model IEnumerable<Flight>
+
+@{ 
+    var fn_positionTo = ViewData["PositionTo"].ToString();
+    var fn_flight = ViewData["Flight"].ToString();
+}
+
+<table>
+    <thead>
+        <tr>
+            <th class="col-md-2">Flight</th>
+            <th class="col-md-4">Origin</th>
+            <th class="col-md-4">Destination</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var flight in Model)
+        {
+            <tr>
+                <td class="col-md-2" onclick="FlightClicked(this)">
+                    <input name="FlightNumber" style="display: none;" value="@flight.FlightNumber" />
+                    @flight.FlightNumber
+                </td>
+                <td class="col-md-4 origin" onclick="PositionClicked(this)">
+                    <input name="CallLetters" style="display: none;" value="@flight.Origin.CallLetters" />
+                    <input name="Latitude" style="display: none;" value="@flight.Origin.Location.Latitude" />
+                    <input name="Longitude" style="display: none;" value="@flight.Origin.Location.Longitude" />
+                    @flight.Origin.Name (@flight.Origin.CallLetters)
+                </td>
+                <td class="col-md-4 destination" onclick="PositionClicked(this)">
+                    <input name="CallLetters" style="display: none;" value="@flight.Destination.CallLetters" />
+                    <input name="Latitude" style="display: none;" value="@flight.Destination.Location.Latitude" />
+                    <input name="Longitude" style="display: none;" value="@flight.Destination.Location.Longitude" />
+                    @flight.Destination.Name (@flight.Destination.CallLetters)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function ExtractPosition(td) {
+        var callLetters = $(td).find("input[name='CallLetters']").val();
+        var latitude = $(td).find("input[name='Latitude']").val();
+        var longitude = $(td).find("input[name='Longitude']").val();
+
+        var position = { callLetters: callLetters, latitude: latitude, longitude: longitude };
+        return position;
+    }
+
+    function PositionClicked(td) {
+        var fn = window['@fn_positionTo'];
+        if (typeof (fn) === 'function') {
+            var position = ExtractPosition(td);
+            fn(position);
+        }
+    }
+
+    function FlightClicked(td) {
+        var fn = window['@fn_flight'];
+        if (typeof (fn) === 'function') {
+            var flightNumber = $(td).find("input[name='FlightNumber']").val();
+            var source = ExtractPosition($(td).siblings(".origin"));
+            var destination = ExtractPosition($(td).siblings(".destination"));
+            fn(source, destination);
+        }
+    }
+</script>

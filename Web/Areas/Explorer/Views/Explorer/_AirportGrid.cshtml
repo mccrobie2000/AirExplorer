@@ -1,0 +1,74 @@
+﻿@using WebControls
+@using BusinessServices.Models
+@model IEnumerable<AirportDTO>
+
+@{ 
+    var myName = ViewData["myAirportGridName"].ToString();
+    if (string.IsNullOrEmpty(myName))
+    {
+        throw new ArgumentException($"myAirportGridName must be passed in ViewData");
+    }
+}
+
+<script>
+    var onAirportSelectedGrid = function (rowId) {
+        var rowData = $('#@myName').getRowData(rowId);
+
+        window.EventBus.publish("countrySelected", rowData.CountryId);
+
+        var data = {
+            airportId: rowData.AirportId
+        };
+
+        $.post(
+            '@Url.Action("Airport", "Explorer")',
+            data,
+            function (data) {
+                window.EventBus.publish("airportDataChanged", data);
+
+                //window.EventBus.publish("clearWindow");
+
+                var position = { latitude: rowData.Latitude, longitude: rowData.Longitude, callLetters: rowData.Name + '\n(' + rowData.Icao + ')', altitude: rowData.Altitude };
+                window.EventBus.publish("labelPositionChanged", position);
+            }
+        );
+
+        return false;
+    }
+
+    var onAirportError = function(userData) {
+        alert("specific handler: " + userData);
+    }
+</script>
+
+@(Html.For<AirportDTO>().WebControls().Grid(Model)
+                .Name(myName)
+                .Caption("Airports")
+                .Width(400)
+                .Columns(columns =>
+                {
+                    columns.Bound(m => m.AirportId).Hidden();
+                    columns.Bound(m => m.Name).Sortable();
+                    columns.Bound(m => m.Icao).Sortable();
+                    columns.Bound(m => m.CountryName).Sortable();
+                    columns.Bound(m => m.CountryId).Hidden();
+                    columns.Bound(m => m.Latitude).Hidden();
+                    columns.Bound(m => m.Longitude).Hidden();
+                    columns.Bound(m => m.Icao).Hidden();
+                    columns.Bound(m => m.Altitude).Hidden();
+                })
+                .DataSource(source =>
+                {
+                    source.Ajax()
+                        .Read(reader =>
+                        {
+                            reader.Action("Airports", "Explorer");
+                        })
+                        .PageSize(10);
+                })
+                .Events(events =>
+                {
+                    events.SelectRow("onAirportSelectedGrid");
+                    events.UserDataHandler("onAirportError");
+                })
+)

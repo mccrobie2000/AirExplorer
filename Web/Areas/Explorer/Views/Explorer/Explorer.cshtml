@@ -1,0 +1,291 @@
+﻿@model Web.Areas.Explorer.Models.ExplorerModel
+
+@{
+    ViewBag.Title = "Explorer";
+}
+
+<div class="row">
+    <div class="col-xs-1">
+        <div id="togglegrids" style="background-color: lightgray; width: 60px; height: 20px; cursor: pointer;">Grids<span id="griddirection" class="ui-icon ui-icon-caret-1-w"></span></div>
+    </div>
+</div>
+
+<div class="row">
+    <div id="grids" class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-6 center-block">
+                @Html.Partial("_AirportGrid", Model.Airports, new ViewDataDictionary(ViewData) { { "myAirportGridName", "AllAirports" } })
+            </div>
+            <div class="col-xs-6 center-block">
+                @Html.Partial("_CountryGrid", Model.Countries)
+            </div>
+        </div>
+        <div class="row">
+            <hr />
+            <div class="col-xs-6">
+                <div id="countryData">Please select a country...</div>
+            </div>
+            <div class="col-xs-6">
+                <div id="airportData" aria-live="polite">Please select an airport...</div>
+            </div>
+        </div>
+        <div class="row">
+            <hr />
+            <div class="col-xs-12">
+                <div id="nearby">Please right-click for nearby airports</div>
+            </div>
+        </div>
+    </div>
+    <div id="globe" class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <canvas id="worldView" width="800" height="800" style="margin: auto; padding: 0; display: block;"></canvas>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="text-right" style="font-size: .8em;">Globe Powered by <a href="https://worldwind.arc.nasa.gov/" target="_blank">NASA WorldWind</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p class="pull-right">
+                    <button id='clearAll' onclick="Clear()">Clear All</button>
+                    <button id='clearNearby' onclick="ClearShapes()">Clear NearBy</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var wwd;
+    var worldWidth = 800;
+    var worldHeight = 800;
+    var gridDirection = "ui-icon-caret-1-w";
+    var cols = "col-xs-6";
+
+    $(document).ready(function () {
+        $('#togglegrids').click(function () {
+            // TODO chuck fire event - let the individual sections handle it
+            $('#worldView').hide();
+            $('#griddirection').removeClass(gridDirection);
+            $('#globe').removeClass(cols);
+
+            $('#grids').toggle({ effect: 'slide', duration: 0 });
+            if (worldWidth == 800) {
+                gridDirection = "ui-icon-caret-1-e";
+                worldWidth = 1800;
+                cols = "col-xs-12";
+            } else {
+                gridDirection = "ui-icon-caret-1-w";
+                worldWidth = 800;
+                cols = "col-xs-6";
+            }
+            $('#globe').addClass(cols);
+            $('#griddirection').addClass(gridDirection);
+            $('#worldView').width(worldWidth);
+            $('#worldView').height(worldHeight);
+            $('#worldView').show();
+            wwd.redraw();
+        });
+    });
+
+    function OnPointerDown(event) {
+        if (event.button == 2 && event.clientX && event.clientY) {
+            pickPoint = event.worldWindow.canvasCoordinates(event.clientX, event.clientY);
+            if (pickPoint[0] >= 0 && pickPoint[0] < event.worldWindow.canvas.width &&
+                pickPoint[1] >= 0 && pickPoint[1] < event.worldWindow.canvas.height) {
+                terrainObject = event.worldWindow.pickTerrain(pickPoint).terrainObject();
+
+                // issue ajax post to fill in popup for list of near-by airports
+
+                var position = { latitude: terrainObject.position.latitude, longitude: terrainObject.position.longitude };
+                $.post('@Url.Action("NearBy", "Explorer")', position, function (data) {
+                    $('#nearby').html(data.Html);
+
+                    for (var i = 0; i < data.Airports.length; i++) {
+
+                        var airportPosition = {
+                            latitude: data.Airports[i].Latitude,
+                            longitude: data.Airports[i].Longitude,
+                            callLetters: data.Airports[i].Name + '\n(' + data.Airports[i].Icao + ')',
+                            altitude: data.Airports[i].Altitude
+                        };
+
+                        LabelIt(airportPosition, shapeLayer);
+                    }
+
+                    if (data.Airports.length > 0) {
+                        wwd.redraw();
+                    }
+                },
+                'json');
+
+                shapeLayer.removeAllRenderables();
+                var location = new WorldWind.Location(position.latitude, position.longitude);
+                var attributes = new WorldWind.ShapeAttributes();
+                attributes.outlineWidth = 3;
+                attributes.outlineColor = WorldWind.Color.BLACK;
+                attributes.drawOutline = true;
+                attributes.drawInterior = false;
+                var circle = new WorldWind.SurfaceCircle(location, 100000, attributes);
+                shapeLayer.addRenderable(circle);
+            }
+        }
+    }
+
+    window.EventBus.on("airportDataChanged", function (data) {
+        console.log('airportDataChanged');
+        $('#airportData').html(data.Html);
+    });
+
+    window.EventBus.on("countryAirportDataChanged", function (data) {
+        console.log('countryAirportDataChanged');
+        $('#airportData').html(data.Html);
+    });
+
+    window.EventBus.on("countryDataChanged", function (data) {
+        console.log('countryDataChanged');
+        $('#countryData').html(data.Html);
+    });
+
+    window.EventBus.on("labelPositionChanged", function (data) {
+        console.log('labelPositionChanged');
+        LabelPositionTo(data);
+    });
+
+    window.EventBus.on("labelIt", function (position) {
+        LabelIt(position);
+    });
+
+    window.EventBus.on("positionChanged", function (data) {
+        console.log('positionChanged');
+        PositionTo(data);
+    });
+
+    window.EventBus.on("clearWindow", function () {
+        console.log('clearWindow');
+        Clear();
+    });
+
+        // Create a WorldWindow for the canvas.
+        wwd = new WorldWind.WorldWindow("worldView");
+
+        // Add some image layers to the WorldWindow's globe.
+        //wwd.addLayer(new WorldWind.BingRoadsLayer());
+        wwd.addLayer(new WorldWind.BingAerialWithLabelsLayer());
+        wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
+
+        // Add a compass, a coordinates display and some view controls to the WorldWindow.
+        //wwd.addLayer(new WorldWind.CompassLayer());
+        //wwd.addLayer(new WorldWind.CoordinatesDisplayLayer(wwd));
+        wwd.addLayer(new WorldWind.ViewControlsLayer(wwd));
+        var placemarkLayer = new WorldWind.RenderableLayer("Placemarks");
+        wwd.addLayer(placemarkLayer);
+        var flightLayer = new WorldWind.RenderableLayer("Flights");
+        wwd.addLayer(flightLayer);
+        var shapeLayer = new WorldWind.RenderableLayer("Shapes");
+        wwd.addLayer(shapeLayer);
+
+        if (window.PointerEvent) {
+            wwd.addEventListener("pointerdown", OnPointerDown);
+        } else {
+            wwd.addEventListener("mousedown", OnPointerDown);
+        }
+
+    //TODO when loaded, position the globe to the center of the boundary's polygon
+
+    function SetAirportView(html) {
+        $('#airportData').html(html);
+    }
+
+    function SetCountryView(html) {
+        $('#countryData').html(html);
+    }
+
+    function ClearShapes() {
+        shapeLayer.removeAllRenderables();
+        wwd.redraw();
+    }
+
+    function Clear() {
+        placemarkLayer.removeAllRenderables();
+        flightLayer.removeAllRenderables();
+
+        wwd.redraw();
+    }
+
+    var LabelPositionTo = function (position) {
+        console.log('LabelPositionTo: goto ' + position.callLetters);
+        LabelIt(position);
+        position.altitude = 1000000; // meters 1000km = 1000*1000 = 1,000,000
+        wwd.goTo(position);
+    }
+
+    var PositionTo = function (position) {
+        console.log('PositionTo: goto ' + position.callLetters);
+        position.altitude = 1000000;
+        wwd.goTo(position);
+    }
+
+    function LabelIt(position, layer) {
+        //var place = new WorldWind.Placemark(new WorldWind.Position(position.latitude, position.longitude, position.altitude));
+        //place.label = position.callLetters;
+        //place.attributes.labelAttributes.color = WorldWind.Color.BLACK;
+        ////place.attributes.labelAttributes.font.weight = "normal";
+        ////place.attributes.labelAttributes.font.style = "normal";
+        ////place.attributes.labelAttributes.font.family = "sans-serif";
+        ////place.attributes.labelAttributes.font.size = 18;
+        ////place.attributes.labelAttributes.enableOutline = false;
+        //place.attributes.labelAttributes.outlineWidth = 1;
+
+        //var place = new WorldWind.Annotation(new WorldWind.Position(position.latitude, position.longitude, position.altitude));
+        //place.altitudeMode = WorldWind.RELATIVE_TO_GROUND;
+        //place.text = position.callLetters;
+        //place.attributes.backgroundColor = new WorldWind.Color(0.392, 0.584, 0.929, 1.0);
+        //place.attributes.textAttributes.color = WorldWind.Color.BLACK;
+        //place.attributes.leaderGapHeight = 15;
+        //place.attributes.leaderGapWidth = 20;
+        //place.attributes.opacity = 0.75;
+
+        place = new WorldWind.GeographicText(new WorldWind.Position(position.latitude, position.longitude, position.altitude), position.callLetters);
+        place.attributes = new WorldWind.TextAttributes(null);
+        place.attributes.color = WorldWind.Color.CYAN;
+        place.attributes.depthTest = false;
+
+        if (layer == null) {
+            placemarkLayer.addRenderable(place);
+        } else {
+            layer.addRenderable(place);
+        }
+    }
+
+    function Flight(source, destination) {
+        var sourcePosition = new WorldWind.Position(source.latitude, source.longitude, 50000);
+        var destinationPosition = new WorldWind.Position(destination.latitude, destination.longitude, 50000);
+        var flight = new WorldWind.Path([sourcePosition, destinationPosition], null);
+        //flight.pathType = WorldWind.GREAT_CIRCLE;
+
+        var place = new WorldWind.Placemark(sourcePosition);
+        place.label = source.callLetters;
+        placemarkLayer.addRenderable(place);
+
+        place = new WorldWind.Placemark(destinationPosition);
+        place.label = destination.callLetters;
+        placemarkLayer.addRenderable(place);
+
+        flightLayer.addRenderable(flight);
+    }
+</script>
+@*
+        Can be used to implement a full post-back with Filter model, then page reload with new model
+        Note the use of the Submit.  MVC will use the hidden fields and form input elements to match
+        up with the arguments in the controller method (Filter model, in this case).
+
+    @using (Html.BeginForm("Search", "Listing"))
+    {
+        @Html.HiddenFor(m => m.Filter.BoundaryName)
+        <input type="submit" value="Go" />
+    }
+*@
