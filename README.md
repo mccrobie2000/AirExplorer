@@ -26,9 +26,7 @@ dotnet build
 
 Running
 =======
-Use ```
-dotnet run --project Web/Web.csproj
-```
+Use ``dotnet run --project Web/Web.csproj``
 
 The dotnet core webserver will start, then use a browser to navigate to the listed URL.
 
