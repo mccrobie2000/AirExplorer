@@ -469,7 +469,7 @@ namespace WebControls
             return this;
         }
 
-	public string ToString()
+	public override string ToString()
         {
             char comma = ' ';
             StringBuilder b = new StringBuilder();
@@ -726,7 +726,7 @@ namespace WebControls
 
                 textWriter.Write(b.ToString());
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
