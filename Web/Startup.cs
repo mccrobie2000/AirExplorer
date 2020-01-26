@@ -16,6 +16,7 @@ using Autofac.Extensions.DependencyInjection;
 using DataServices;
 using VirtualRadarServer.Models;
 using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Hosting;
 
 namespace Web
 {
@@ -32,7 +33,7 @@ namespace Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             //https://github.com/aspnet/Mvc/issues/4842
-            services.AddMvc().AddControllersAsServices().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+//            services.AddMvc().AddControllersAsServices().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -53,7 +54,7 @@ namespace Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
