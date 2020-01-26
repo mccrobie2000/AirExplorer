@@ -20,9 +20,7 @@ can then be used to mark sortable columns, etc.  No longer do you have to just a
 
 Building
 ========
-```
-dotnet build
-```
+``dotnet build``
 
 Running
 =======
