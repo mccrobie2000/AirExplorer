@@ -3,12 +3,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+  <ItemGroup/>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityframeworkCore" Version="2.0.1" />
-    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0"/>
+    <PackageReference Include="Microsoft.EntityframeworkCore" Version="5.0.5"/>
+    <PackageReference Include="System.ComponentModel" Version="4.3.0"/>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0"/>
   </ItemGroup>
 </Project>
